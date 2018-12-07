@@ -12,20 +12,18 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
+import django12factor
+
+
+d12f = django12factor.factorise()
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "*lo))og6a@5ez7jixpc7qkhoxh7s^h!(h-@cyo9=%n-4l6ao19"
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+DEBUG = d12f["DEBUG"]
+ALLOWED_HOSTS = d12f["ALLOWED_HOSTS"]
+SECRET_KEY = d12f["SECRET_KEY"]
 
 
 # Application definition
