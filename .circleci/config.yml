@@ -3,6 +3,12 @@ jobs:
   build:
     docker:
       - image: circleci/python:3.7.1
+        environment:
+          DATABASE_URL: postgresql://root@localhost/circle_test?sslmode=disable
+      - image: circleci/postgres:9.6.2
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_DB: circle_test
     environment:
       SECRET_KEY: NOT_A_SECRET-3rFGGNOlSO8HhMC6rkq+KN4X1TY/76tPhJ/hD7A9Wp2PIOilJn9AngFt2ulcnLEE
     steps:
