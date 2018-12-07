@@ -14,6 +14,7 @@ gunicorn = "*"
 "django12factor" = "*"
 whitenoise = "*"
 "psycopg2" = "*"
+requests = "*"
 
 [requires]
 python_version = "3.7"
