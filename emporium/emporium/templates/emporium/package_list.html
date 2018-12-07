@@ -3,7 +3,12 @@
 	<h2>{{ package }}</h2>
 	<ul>
 		{% for pv in package.packageversion_set.all %}
-			<li>{{ pv.version }}</li>
+			<li>
+				<h3>{{ pv.version }}</h3>
+				{% if pv.fetched %}
+					<code>{{ pv.setuppy }}</code>
+				{% endif %}
+			</li>
 		{% endfor %}
 	</ul>
 </div>
