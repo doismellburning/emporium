@@ -11,4 +11,7 @@ jobs:
             pipenv install --dev
       - run:
           command: |
+            pipenv run black --check emporium
+      - run:
+          command: |
             pipenv run pytest emporium
