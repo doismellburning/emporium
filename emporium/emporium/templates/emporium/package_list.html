@@ -1,3 +1,17 @@
-{{ package_list }}
+{% for package in package_list %}
+<div>
+	<h2>{{ package }}</h2>
+	<ul>
+		{% for pv in package.packageversion_set.all %}
+			<li>
+				<h3>{{ pv.version }}</h3>
+				{% if pv.fetched %}
+					<code>{{ pv.setuppy }}</code>
+				{% endif %}
+			</li>
+		{% endfor %}
+	</ul>
+</div>
+{% endfor %}
 
 <a href="{% url 'add-package' %}">Add</a>
