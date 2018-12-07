@@ -4,11 +4,15 @@ from django.db import models
 
 import requests
 
-from . import sdist
+from . import sdist, validators
 
 
 class Package(models.Model):
-    name = models.CharField(max_length=120)
+    name = models.CharField(
+        max_length=120,
+        unique=True,
+        validators=[validators.validate_package_name_exists],
+    )
 
     def __str__(self):
         return self.name
