@@ -3,6 +3,8 @@ jobs:
   build:
     docker:
       - image: circleci/python:3.7.1
+    environment:
+      SECRET_KEY: NOT_A_SECRET-3rFGGNOlSO8HhMC6rkq+KN4X1TY/76tPhJ/hD7A9Wp2PIOilJn9AngFt2ulcnLEE
     steps:
       - checkout
       - run:
