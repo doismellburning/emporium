@@ -27,4 +27,9 @@ urlpatterns = [
         FetchLatestPackageVersionView.as_view(),
         name="fetch-latest-package-version",
     ),
+    path(
+        "packages/<str:name>/<str:version>/fetch-setuppy/",
+        FetchSetuppyView.as_view(),
+        name="fetch-setuppy",
+    ),
 ]

@@ -11,6 +11,11 @@
 				<h3>{{ pv.version }}</h3>
 				{% if pv.fetched %}
 					<code>{{ pv.setuppy }}</code>
+				{% else %}
+					<form action="{% url 'fetch-setuppy' name=package.name version=pv.version %}" method="post">
+						{% csrf_token %}
+						<input type="submit" />
+					</form>
 				{% endif %}
 			</li>
 		{% endfor %}
