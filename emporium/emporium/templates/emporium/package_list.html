@@ -1,6 +1,11 @@
 {% for package in package_list %}
 <div>
-	{{ package }}
+	<h2>{{ package }}</h2>
+	<ul>
+		{% for pv in package.packageversion_set.all %}
+			<li>{{ pv.version }}</li>
+		{% endfor %}
+	</ul>
 </div>
 {% endfor %}
 
