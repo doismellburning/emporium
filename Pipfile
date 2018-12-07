@@ -12,6 +12,7 @@ black = "*"
 django = "*"
 gunicorn = "*"
 "django12factor" = "*"
+whitenoise = "*"
 
 [requires]
 python_version = "3.7"
