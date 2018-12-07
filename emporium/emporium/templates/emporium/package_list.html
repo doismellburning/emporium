@@ -1,6 +1,10 @@
 {% for package in package_list %}
 <div>
 	<h2>{{ package }}</h2>
+	<form action="{% url 'fetch-latest-package-version' pk=package.id %}" method="post">
+		{% csrf_token %}
+		<input type="submit"/>
+	</form>
 	<ul>
 		{% for pv in package.packageversion_set.all %}
 			<li>
