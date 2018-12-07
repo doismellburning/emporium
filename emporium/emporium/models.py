@@ -64,7 +64,7 @@ class PackageVersion(models.Model):
 
         return None
 
-    def fetch_setuppy(self) -> Optional[bytes]:
+    def fetch_setuppy(self) -> Optional[str]:
         """
         Fetches and saves and returns the sdist's setup.py, if it can be found
         """
