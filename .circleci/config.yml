@@ -21,6 +21,8 @@ jobs:
           command: |
             pipenv run black --check emporium
       - run:
+          command: pipenv run mypy emporium
+      - run:
           command: |
             pipenv run emporium/manage.py collectstatic --noinput
       - run:

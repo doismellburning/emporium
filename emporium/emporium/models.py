@@ -1,3 +1,5 @@
+from typing import Optional, Tuple
+
 from django.db import models
 
 import requests
@@ -11,7 +13,7 @@ class Package(models.Model):
     def __str__(self):
         return self.name
 
-    def fetch_latest_version(self) -> ("PackageVersion", bool):
+    def fetch_latest_version(self) -> Optional[Tuple["PackageVersion", bool]]:
         """
         Checks PyPI for the latest version, then get_or_create-s an appropriate PackageVersion
         """
@@ -38,7 +40,7 @@ class PackageVersion(models.Model):
     def __str__(self):
         return str(self.package) + "-" + self.version
 
-    def fetch_sdist_url(self) -> str:
+    def fetch_sdist_url(self) -> Optional[str]:
         """
         Fetches the URL of the sdist from PyPI, or None if any kind of issue
         """
@@ -54,16 +56,21 @@ class PackageVersion(models.Model):
                 if release_file["packagetype"] == "sdist":
                     return release_file["url"]
         except (KeyError, IndexError):
-            return None
+            pass
 
-    def fetch_setuppy(self) -> str:
+        return None
+
+    def fetch_setuppy(self) -> Optional[bytes]:
         """
         Fetches and saves and returns the sdist's setup.py, if it can be found
         """
 
+        # TODO Fewer hacks, fewer assumptions, more modularity
+
         sdist_url = self.fetch_sdist_url()
 
-        # TODO Fewer hacks, fewer assumptions, more modularity
+        if sdist_url is None:
+            return None
 
         resp = requests.get(sdist_url)
         resp.raise_for_status()
@@ -76,3 +83,5 @@ class PackageVersion(models.Model):
             self.fetched = True
 
         self.save()
+
+        return setuppy
