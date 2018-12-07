@@ -1,12 +1,21 @@
 {% for package in package_list %}
 <div>
 	<h2>{{ package }}</h2>
+	<form action="{% url 'fetch-latest-package-version' pk=package.id %}" method="post">
+		{% csrf_token %}
+		<input type="submit"/>
+	</form>
 	<ul>
 		{% for pv in package.packageversion_set.all %}
 			<li>
 				<h3>{{ pv.version }}</h3>
 				{% if pv.fetched %}
 					<code>{{ pv.setuppy }}</code>
+				{% else %}
+					<form action="{% url 'fetch-setuppy' name=package.name version=pv.version %}" method="post">
+						{% csrf_token %}
+						<input type="submit" />
+					</form>
 				{% endif %}
 			</li>
 		{% endfor %}

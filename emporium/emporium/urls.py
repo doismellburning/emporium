@@ -22,4 +22,14 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("packages/", PackageListView.as_view(), name="packages"),
     path("packages/add/", AddPackageView.as_view(), name="add-package"),
+    path(
+        "packages/<int:pk>/fetch-latest-version/",
+        FetchLatestPackageVersionView.as_view(),
+        name="fetch-latest-package-version",
+    ),
+    path(
+        "packages/<str:name>/<str:version>/fetch-setuppy/",
+        FetchSetuppyView.as_view(),
+        name="fetch-setuppy",
+    ),
 ]
