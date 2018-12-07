@@ -18,5 +18,7 @@ jobs:
           command: |
             pipenv run emporium/manage.py collectstatic --noinput
       - run:
+          command: pipenv run emporium/manage.py check
+      - run:
           command: |
             pipenv run pytest emporium
