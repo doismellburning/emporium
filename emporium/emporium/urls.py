@@ -20,5 +20,6 @@ from .views import *
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("packages/", PackageListView.as_view()),
+    path("packages/", PackageListView.as_view(), name="packages"),
+    path("packages/add/", AddPackageView.as_view(), name="add-package"),
 ]
