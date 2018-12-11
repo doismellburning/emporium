@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic.base import View
-from django.views.generic.detail import SingleObjectMixin
+from django.views.generic.detail import SingleObjectMixin, DetailView
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 
@@ -12,6 +12,17 @@ from .parser import parse_install_requires
 
 class PackageListView(ListView):
     model = Package
+
+    def get_queryset(self):
+        return super().get_queryset().order_by("name")
+
+
+class PackageDetailView(DetailView):
+    model = Package
+    slug_url_kwarg = "name"
+
+    def get_slug_field(self):
+        return "name"
 
 
 class AddPackageView(CreateView):

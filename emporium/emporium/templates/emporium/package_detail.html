@@ -1,6 +1,6 @@
-{% for package in package_list %}
+<a href="{% url 'packages' %}">Packages</a>
 <div>
-	<h2><a href="{% url 'package' name=package.name %}">{{ package }}</a></h2>
+	<h2>{{ package }}</h2>
 	<form action="{% url 'fetch-latest-package-version' pk=package.id %}" method="post">
 		{% csrf_token %}
 		<input type="submit" value="Fetch latest package version" />
@@ -11,11 +11,7 @@
 				<h3>{{ pv.version }}</h3>
 				{% if pv.fetched %}
 					<a href={% url 'parse-setuppy' name=package.name version=pv.version  %}>Parse setup.py</a>
-					<ul>
-						{% for install_requires in pv.parse_install_requires %}
-							<li>{{ install_requires }}</li>
-						{% endfor %}
-					</ul>
+					<pre>{{ pv.setuppy|linebreaksbr }}</pre>
 				{% else %}
 					<form action="{% url 'fetch-setuppy' name=package.name version=pv.version %}" method="post">
 						{% csrf_token %}
@@ -26,6 +22,3 @@
 		{% endfor %}
 	</ul>
 </div>
-{% endfor %}
-
-<a href="{% url 'add-package' %}">Add</a>
