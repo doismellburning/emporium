@@ -13,6 +13,9 @@ from .parser import parse_install_requires
 class PackageListView(ListView):
     model = Package
 
+    def get_queryset(self):
+        return super().get_queryset().order_by("name")
+
 
 class AddPackageView(CreateView):
     model = Package
