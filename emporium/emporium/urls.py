@@ -32,4 +32,9 @@ urlpatterns = [
         FetchSetuppyView.as_view(),
         name="fetch-setuppy",
     ),
+    path(
+        "packages/<str:name>/<str:version>/parse/",
+        ParseSetuppyView.as_view(),
+        name="parse-setuppy",
+    ),
 ]
