@@ -4,7 +4,7 @@ from django.db import models
 
 import requests
 
-from . import sdist, validators
+from . import sdist, validators, parser
 
 
 class Package(models.Model):
@@ -89,3 +89,6 @@ class PackageVersion(models.Model):
         self.save()
 
         return setuppy
+
+    def parse_install_requires(self):
+        return parser.parse_install_requires(self.setuppy)
