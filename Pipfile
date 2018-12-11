@@ -16,6 +16,7 @@ gunicorn = "*"
 whitenoise = "*"
 "psycopg2" = "*"
 requests = "*"
+sentry-sdk = "*"
 
 [requires]
 python_version = "3.7"
