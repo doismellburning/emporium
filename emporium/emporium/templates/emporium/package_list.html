@@ -14,7 +14,7 @@
 				{% else %}
 					<form action="{% url 'fetch-setuppy' name=package.name version=pv.version %}" method="post">
 						{% csrf_token %}
-						<input type="submit" />
+						<input type="submit" value="Fetch setup.py" />
 					</form>
 				{% endif %}
 			</li>
