@@ -11,7 +11,11 @@
 				<h3>{{ pv.version }}</h3>
 				{% if pv.fetched %}
 					<a href={% url 'parse-setuppy' name=package.name version=pv.version  %}>Parse setup.py</a>
-					{{ pv.parse_install_requires }}
+					<ul>
+						{% for install_requires in pv.parse_install_requires %}
+							<li>{{ install_requires }}</li>
+						{% endfor %}
+					</ul>
 				{% else %}
 					<form action="{% url 'fetch-setuppy' name=package.name version=pv.version %}" method="post">
 						{% csrf_token %}
