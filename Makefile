@@ -2,6 +2,7 @@ bootstrap-dev:
 	pipenv install --dev
 
 check:
+	flake8 emporium
 	black --check emporium
 	isort --check-only --recursive emporium
 	mypy emporium
