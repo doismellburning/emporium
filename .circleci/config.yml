@@ -16,6 +16,10 @@ jobs:
             sudo pip install pipenv
             make bootstrap-dev
       - run:
+          command: |
+            pipenv run make fix
+            git diff --exit-code # Error if fix changed things, to ensure stability
+      - run:
           command: pipenv run make check
       - run:
           command: pipenv run make collectstatic
