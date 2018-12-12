@@ -9,26 +9,35 @@
 				</form>
 			</td>
 			<td>
-				<ul>
+				<table>
 					{% for pv in package.packageversion_set.all %}
-						<li>
-							<h3>{{ pv.version }}</h3>
-							{% if pv.fetched %}
-								<a href={% url 'parse-setuppy' name=package.name version=pv.version  %}>Parse setup.py</a>
-								<ul>
-									{% for install_requires in pv.parse_install_requires %}
-										<li>{{ install_requires }}</li>
-									{% endfor %}
-								</ul>
-							{% else %}
-								<form action="{% url 'fetch-setuppy' name=package.name version=pv.version %}" method="post">
-									{% csrf_token %}
-									<input type="submit" value="Fetch setup.py" />
-								</form>
-							{% endif %}
-						</li>
+						<tr>
+							<td>{{ pv.version }}</td>
+							<td>
+								{% if not pv.fetched %}
+									<form action="{% url 'fetch-setuppy' name=package.name version=pv.version %}" method="post">
+										{% csrf_token %}
+										<input type="submit" value="Fetch setup.py" />
+									</form>
+								{% endif %}
+							</td>
+							<td>
+								{% if pv.fetched %}
+									<a href={% url 'parse-setuppy' name=package.name version=pv.version  %}>Parse setup.py</a>
+								{% endif %}
+							</td>
+							<td>
+								{% if pv.fetched %}
+									<ul>
+										{% for install_requires in pv.parse_install_requires %}
+											<li>{{ install_requires }}</li>
+										{% endfor %}
+									</ul>
+								{% endif %}
+							</td>
+						</tr>
 					{% endfor %}
-				</ul>
+				</table>
 			</td>
 		</tr>
 	{% endfor %}
