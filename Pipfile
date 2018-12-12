@@ -10,6 +10,7 @@ black = "*"
 mypy = "*"
 isort = "*"
 "autopep8" = "*"
+"flake8" = "*"
 
 [packages]
 django = "*"
