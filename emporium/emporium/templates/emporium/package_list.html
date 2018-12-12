@@ -1,31 +1,37 @@
-{% for package in package_list %}
-<div>
-	<h2><a href="{% url 'package' name=package.name %}">{{ package }}</a></h2>
-	<form action="{% url 'fetch-latest-package-version' pk=package.id %}" method="post">
-		{% csrf_token %}
-		<input type="submit" value="Fetch latest package version" />
-	</form>
-	<ul>
-		{% for pv in package.packageversion_set.all %}
-			<li>
-				<h3>{{ pv.version }}</h3>
-				{% if pv.fetched %}
-					<a href={% url 'parse-setuppy' name=package.name version=pv.version  %}>Parse setup.py</a>
-					<ul>
-						{% for install_requires in pv.parse_install_requires %}
-							<li>{{ install_requires }}</li>
-						{% endfor %}
-					</ul>
-				{% else %}
-					<form action="{% url 'fetch-setuppy' name=package.name version=pv.version %}" method="post">
-						{% csrf_token %}
-						<input type="submit" value="Fetch setup.py" />
-					</form>
-				{% endif %}
-			</li>
-		{% endfor %}
-	</ul>
-</div>
-{% endfor %}
+<table>
+	{% for package in package_list %}
+		<tr>
+			<td><a href="{% url 'package' name=package.name %}">{{ package }}</a></td>
+			<td>
+				<form action="{% url 'fetch-latest-package-version' pk=package.id %}" method="post">
+					{% csrf_token %}
+					<input type="submit" value="Fetch latest package version" />
+				</form>
+			</td>
+			<td>
+				<ul>
+					{% for pv in package.packageversion_set.all %}
+						<li>
+							<h3>{{ pv.version }}</h3>
+							{% if pv.fetched %}
+								<a href={% url 'parse-setuppy' name=package.name version=pv.version  %}>Parse setup.py</a>
+								<ul>
+									{% for install_requires in pv.parse_install_requires %}
+										<li>{{ install_requires }}</li>
+									{% endfor %}
+								</ul>
+							{% else %}
+								<form action="{% url 'fetch-setuppy' name=package.name version=pv.version %}" method="post">
+									{% csrf_token %}
+									<input type="submit" value="Fetch setup.py" />
+								</form>
+							{% endif %}
+						</li>
+					{% endfor %}
+				</ul>
+			</td>
+		</tr>
+	{% endfor %}
+</table>
 
 <a href="{% url 'add-package' %}">Add</a>
