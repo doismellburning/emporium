@@ -9,6 +9,7 @@ pytest-django = "*"
 black = "*"
 mypy = "*"
 isort = "*"
+"autopep8" = "*"
 
 [packages]
 django = "*"

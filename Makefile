@@ -11,6 +11,7 @@ check:
 fix:
 	black emporium
 	isort --apply --recursive emporium
+	autopep8 --in-place --recursive emporium/
 
 collectstatic:
 	SECRET_KEY=notasecret emporium/manage.py collectstatic --noinput
