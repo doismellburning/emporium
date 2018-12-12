@@ -1,10 +1,9 @@
 from typing import Optional, Tuple
 
+import requests
 from django.db import models
 
-import requests
-
-from . import sdist, validators, parser
+from . import parser, sdist, validators
 
 
 class Package(models.Model):
