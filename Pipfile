@@ -20,6 +20,8 @@ whitenoise = "*"
 "psycopg2" = "*"
 requests = "*"
 sentry-sdk = "*"
+"pep508" = "*"
+parsley = "*"
 
 [requires]
 python_version = "3.7"

@@ -35,6 +35,15 @@
 									</ul>
 								{% endif %}
 							</td>
+							<td>
+								{% if pv.fetched %}
+									<ul>
+										{% for dependency_name in pv.parse_dependency_names %}
+											<li>{{ dependency_name }}</li>
+										{% endfor %}
+									</ul>
+								{% endif %}
+							</td>
 						</tr>
 					{% endfor %}
 				</table>
