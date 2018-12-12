@@ -1,6 +1,5 @@
-from django.core.exceptions import ValidationError
-
 import requests
+from django.core.exceptions import ValidationError
 
 
 def validate_package_name_exists(name):

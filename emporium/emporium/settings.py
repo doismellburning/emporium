@@ -14,7 +14,6 @@ import os
 
 import django12factor
 
-
 d12f = django12factor.factorise()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
