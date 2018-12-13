@@ -6,6 +6,7 @@ from django.views.generic.detail import DetailView, SingleObjectMixin
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 
+from .forms import PackageForm
 from .models import Package, PackageVersion
 from .parser import parse_install_requires
 
@@ -15,6 +16,11 @@ class PackageListView(ListView):
 
     def get_queryset(self):
         return super().get_queryset().order_by("name")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["add_package_form"] = PackageForm()
+        return context
 
 
 class PackageDetailView(DetailView):
@@ -27,7 +33,7 @@ class PackageDetailView(DetailView):
 
 class AddPackageView(CreateView):
     model = Package
-    fields = ["name"]
+    form_class = PackageForm
     success_url = reverse_lazy("packages")
 
 
