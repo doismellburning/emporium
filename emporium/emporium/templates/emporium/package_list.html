@@ -43,4 +43,7 @@
 	{% endfor %}
 </table>
 
-<a href="{% url 'add-package' %}">Add</a>
+<form action="{% url 'add-package' %}" method="POST">{% csrf_token %}
+{{ add_package_form.as_p }}
+<input type="submit" value="Add Package">
+</form>
