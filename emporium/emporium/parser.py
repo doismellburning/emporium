@@ -7,6 +7,9 @@ but maybe this will be good enough...!
 
 import ast
 
+import parsley
+import pep508
+
 
 def parse_install_requires(setuppy):
     tree = ast.parse(setuppy)
@@ -31,3 +34,26 @@ class InstallRequiresFinder(ast.NodeVisitor):
                             self.install_requires = [s.s for s in keyword.value.elts]
 
         self.generic_visit(node)
+
+
+_PEP508_PARSER = None
+
+
+def get_pep508_parser():
+    global _PEP508_PARSER
+    if _PEP508_PARSER is None:
+        _PEP508_PARSER = parsley.makeGrammar(pep508.grammar, {"lookup": lambda x: x})
+    return _PEP508_PARSER
+
+
+def parse_dependency_names(setuppy):
+
+    install_requires = parse_install_requires(setuppy)
+
+    dependency_names = []
+    pep508parser = get_pep508_parser()
+
+    for ir in install_requires:
+        dependency_names.append(pep508parser(ir).specification()[0])
+
+    return dependency_names

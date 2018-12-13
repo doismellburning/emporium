@@ -91,3 +91,6 @@ class PackageVersion(models.Model):
 
     def parse_install_requires(self):
         return parser.parse_install_requires(self.setuppy)
+
+    def parse_dependency_names(self):
+        return parser.parse_dependency_names(self.setuppy)
