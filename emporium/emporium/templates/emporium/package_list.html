@@ -32,7 +32,7 @@
 							<td>
 								<ul>
 									{% for dependency in pv.dependency_set.all %}
-										<li>{{ dependency.package.name }} / {{ dependency.specification }}</li>
+										<li>{{ dependency.package.name }} (<code>{{ dependency.specification }}</code>)</li>
 									{% endfor %}
 								</ul>
 							</td>
