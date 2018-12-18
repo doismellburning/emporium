@@ -94,3 +94,13 @@ class PackageVersion(models.Model):
 
     def parse_dependency_names(self):
         return parser.parse_dependency_names(self.setuppy)
+
+
+class Dependency(models.Model):
+    """
+    "Version 2 of Package Foo depends on Package Bar with some qualifiers"
+    """
+
+    package_version = models.ForeignKey("PackageVersion", on_delete=models.CASCADE)
+    package = models.ForeignKey("Package", on_delete=models.CASCADE)
+    specification = models.CharField(max_length=1000)
