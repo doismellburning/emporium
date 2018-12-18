@@ -30,24 +30,6 @@
 								{% endif %}
 							</td>
 							<td>
-								{% if pv.fetched %}
-									<ul>
-										{% for install_requires in pv.parse_install_requires %}
-											<li>{{ install_requires }}</li>
-										{% endfor %}
-									</ul>
-								{% endif %}
-							</td>
-							<td>
-								{% if pv.fetched %}
-									<ul>
-										{% for dependency_name in pv.parse_dependency_names %}
-											<li>{{ dependency_name }}</li>
-										{% endfor %}
-									</ul>
-								{% endif %}
-							</td>
-							<td>
 								<ul>
 									{% for dependency in pv.dependency_set.all %}
 										<li>{{ dependency.package.name }} / {{ dependency.specification }}</li>

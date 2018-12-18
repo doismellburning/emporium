@@ -89,12 +89,6 @@ class PackageVersion(models.Model):
 
         return setuppy
 
-    def parse_install_requires(self):
-        return parser.parse_install_requires(self.setuppy)
-
-    def parse_dependency_names(self):
-        return parser.parse_dependency_names(self.setuppy)
-
     def parse_dependencies(self):
         install_requires = parser.parse_install_requires(self.setuppy)
         for spec in install_requires:
