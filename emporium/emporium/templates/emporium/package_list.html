@@ -23,7 +23,10 @@
 							</td>
 							<td>
 								{% if pv.fetched %}
-									<a href={% url 'parse-setuppy' name=package.name version=pv.version  %}>Parse setup.py</a>
+									<form action="{% url 'parse-setuppy' name=package.name version=pv.version %}" method="post">
+										{% csrf_token %}
+										<input type="submit" value="Parse setup.py" />
+									</form>
 								{% endif %}
 							</td>
 							<td>

@@ -95,6 +95,9 @@ class PackageVersion(models.Model):
     def parse_dependency_names(self):
         return parser.parse_dependency_names(self.setuppy)
 
+    def parse_dependencies(self):
+        pass
+
 
 class Dependency(models.Model):
     """
