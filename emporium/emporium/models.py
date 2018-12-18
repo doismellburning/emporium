@@ -96,7 +96,15 @@ class PackageVersion(models.Model):
         return parser.parse_dependency_names(self.setuppy)
 
     def parse_dependencies(self):
-        pass
+        install_requires = parser.parse_install_requires(self.setuppy)
+        for spec in install_requires:
+            dependency_name = parser.parse_dependency_name(spec)
+            package, _ = Package.objects.get_or_create(name=dependency_name)
+            dependency, _ = Dependency.objects.get_or_create(
+                package_version=self, package=package
+            )  # TODO Think about behaviour when someone has multiple requirements with duplicate package names!
+            dependency.specification = spec
+            dependency.save()
 
 
 class Dependency(models.Model):
