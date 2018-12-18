@@ -47,6 +47,13 @@
 									</ul>
 								{% endif %}
 							</td>
+							<td>
+								<ul>
+									{% for dependency in pv.dependency_set.all %}
+										<li>{{ dependency.package.name }} / {{ dependency.specification }}</li>
+									{% endfor %}
+								</ul>
+							</td>
 						</tr>
 					{% endfor %}
 				</table>
