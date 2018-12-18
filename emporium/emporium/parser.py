@@ -46,14 +46,18 @@ def get_pep508_parser():
     return _PEP508_PARSER
 
 
+def parse_dependency_name(specification: str) -> str:  # TODO Handle errors
+    pep508parser = get_pep508_parser()
+    return pep508parser(specification).specification()[0]
+
+
 def parse_dependency_names(setuppy):
 
     install_requires = parse_install_requires(setuppy)
 
     dependency_names = []
-    pep508parser = get_pep508_parser()
 
-    for ir in install_requires:
-        dependency_names.append(pep508parser(ir).specification()[0])
+    for spec in install_requires:
+        dependency_names.append(parse_dependency_name(spec))
 
     return dependency_names
