@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "emporium",
+    "django_rq",
 ]
 
 MIDDLEWARE = [
@@ -120,3 +121,13 @@ if "SENTRY_DSN" in os.environ:
     from sentry_sdk.integrations.django import DjangoIntegration
 
     sentry_sdk.init(dsn=os.environ["SENTRY_DSN"], integrations=[DjangoIntegration()])
+
+
+# RQ
+
+RQ_QUEUES = {
+    "default": {
+        "URL": os.getenv("REDIS_URL", "redis://localhost:6379/0"),
+        "DEFAULT_TIMEOUT": 360,
+    }
+}
