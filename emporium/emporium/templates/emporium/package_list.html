@@ -23,26 +23,18 @@
 							</td>
 							<td>
 								{% if pv.fetched %}
-									<a href={% url 'parse-setuppy' name=package.name version=pv.version  %}>Parse setup.py</a>
+									<form action="{% url 'parse-setuppy' name=package.name version=pv.version %}" method="post">
+										{% csrf_token %}
+										<input type="submit" value="Parse setup.py" />
+									</form>
 								{% endif %}
 							</td>
 							<td>
-								{% if pv.fetched %}
-									<ul>
-										{% for install_requires in pv.parse_install_requires %}
-											<li>{{ install_requires }}</li>
-										{% endfor %}
-									</ul>
-								{% endif %}
-							</td>
-							<td>
-								{% if pv.fetched %}
-									<ul>
-										{% for dependency_name in pv.parse_dependency_names %}
-											<li>{{ dependency_name }}</li>
-										{% endfor %}
-									</ul>
-								{% endif %}
+								<ul>
+									{% for dependency in pv.dependency_set.all %}
+										<li>{{ dependency.package.name }} / {{ dependency.specification }}</li>
+									{% endfor %}
+								</ul>
 							</td>
 						</tr>
 					{% endfor %}

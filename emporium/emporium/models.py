@@ -89,8 +89,23 @@ class PackageVersion(models.Model):
 
         return setuppy
 
-    def parse_install_requires(self):
-        return parser.parse_install_requires(self.setuppy)
+    def parse_dependencies(self):
+        install_requires = parser.parse_install_requires(self.setuppy)
+        for spec in install_requires:
+            dependency_name = parser.parse_dependency_name(spec)
+            package, _ = Package.objects.get_or_create(name=dependency_name)
+            dependency, _ = Dependency.objects.get_or_create(
+                package_version=self, package=package
+            )  # TODO Think about behaviour when someone has multiple requirements with duplicate package names!
+            dependency.specification = spec
+            dependency.save()
 
-    def parse_dependency_names(self):
-        return parser.parse_dependency_names(self.setuppy)
+
+class Dependency(models.Model):
+    """
+    "Version 2 of Package Foo depends on Package Bar with some qualifiers"
+    """
+
+    package_version = models.ForeignKey("PackageVersion", on_delete=models.CASCADE)
+    package = models.ForeignKey("Package", on_delete=models.CASCADE)
+    specification = models.CharField(max_length=1000)
