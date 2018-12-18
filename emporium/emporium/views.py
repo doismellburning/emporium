@@ -1,12 +1,12 @@
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic.base import View
+from django.views.generic.base import TemplateView, View
 from django.views.generic.detail import DetailView, SingleObjectMixin
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 
 from .forms import PackageForm
-from .models import Package, PackageVersion
+from .models import Dependency, Package, PackageVersion
 
 
 class PackageListView(ListView):
@@ -73,3 +73,19 @@ class ParseSetuppyView(View, SingleObjectMixin):
         pv = self.get_object()
         pv.parse_dependencies()
         return redirect(reverse_lazy("packages"))
+
+
+class DependencyDotData(TemplateView):
+    template_name = "emporium/dependency_dot_data.dot"
+    # content_type = "text/vnd.graphviz"
+    content_type = "text/plain"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context[
+            "dependencies"
+        ] = (
+            Dependency.objects.all()
+        )  # TODO: Crude, doesn't unique by package or limit to latest PV
+        # PackageVersion.objects.order_by("-version").distinct("version")
+        return context

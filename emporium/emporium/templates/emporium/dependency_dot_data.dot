@@ -1,0 +1,7 @@
+# Try http://viz-js.com/ with fdp
+
+digraph G {
+	{% for dependency in dependencies %}
+		"{{ dependency.package_version.package.name }}" -> "{{ dependency.package.name }}"
+	{% endfor %}
+}
