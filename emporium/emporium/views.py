@@ -1,3 +1,4 @@
+import django_rq
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView, View
@@ -6,6 +7,7 @@ from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 
 from .forms import PackageForm
+from .jobs import fetch_latest_version
 from .models import Dependency, Package, PackageVersion
 
 
@@ -41,7 +43,7 @@ class FetchLatestPackageVersionView(View, SingleObjectMixin):
 
     def post(self, request, *args, **kwargs):
         package = self.get_object()
-        package.fetch_latest_version()
+        django_rq.enqueue(fetch_latest_version, package.name)
         return redirect(reverse_lazy("packages"))
 
 
