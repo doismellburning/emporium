@@ -37,6 +37,11 @@ class AddPackageView(LoginRequiredMixin, CreateView):
     form_class = PackageForm
     success_url = reverse_lazy("packages")
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        django_rq.enqueue(fetch_latest_version, self.object.name)
+        return response
+
 
 class FetchLatestPackageVersionView(LoginRequiredMixin, View, SingleObjectMixin):
     model = Package
