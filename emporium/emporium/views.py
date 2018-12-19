@@ -8,7 +8,7 @@ from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 
 from .forms import PackageForm
-from .jobs import fetch_latest_version
+from .jobs import fetch_latest_version, fetch_setuppy, parse_dependencies
 from .models import Dependency, Package, PackageVersion
 
 
@@ -73,7 +73,7 @@ class FetchSetuppyView(LoginRequiredMixin, View, SingleObjectMixin):
 
     def post(self, request, *args, **kwargs):
         pv = self.get_object()
-        pv.fetch_setuppy()
+        django_rq.enqueue(fetch_setuppy, pv.package.name, pv.version)
         return redirect(reverse_lazy("packages"))
 
 
@@ -88,7 +88,7 @@ class ParseSetuppyView(LoginRequiredMixin, View, SingleObjectMixin):
 
     def post(self, request, *args, **kwargs):
         pv = self.get_object()
-        pv.parse_dependencies()
+        django_rq.enqueue(parse_dependencies, pv.package.name, pv.version)
         return redirect(reverse_lazy("packages"))
 
 
