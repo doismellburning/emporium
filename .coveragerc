@@ -1,0 +1,20 @@
+[run]
+source = emporium
+branch = True
+omit =
+	emporium/emporium/wsgi.py
+	emporium/manage.py
+
+[report]
+#fail_under = 100
+show_missing = True
+exclude_lines =
+	pragma: no cover
+	def __repr__
+	if DEBUG
+	if self.debug:
+	if settings.DEBUG
+	raise AssertionError
+	raise NotImplementedError
+	if 0:
+	if __name__ == .__main__.:
