@@ -11,6 +11,8 @@ mypy = "*"
 isort = "*"
 "autopep8" = "*"
 "flake8" = "*"
+coverage = "*"
+pytest-cov = "*"
 
 [packages]
 django = "*"
