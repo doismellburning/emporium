@@ -22,6 +22,7 @@ requests = "*"
 sentry-sdk = "*"
 "pep508" = "*"
 parsley = "*"
+django-rq = "*"
 
 [requires]
 python_version = "3.7"

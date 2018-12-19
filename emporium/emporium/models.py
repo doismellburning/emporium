@@ -1,4 +1,4 @@
-from typing import Optional, Tuple
+from typing import Iterable, Optional, Tuple
 
 import requests
 from django.db import models
@@ -89,8 +89,9 @@ class PackageVersion(models.Model):
 
         return setuppy
 
-    def parse_dependencies(self):
+    def parse_dependencies(self) -> Iterable["Dependency"]:
         install_requires = parser.parse_install_requires(self.setuppy)
+        dependencies = []
         for spec in install_requires:
             dependency_name = parser.parse_dependency_name(spec)
             package, _ = Package.objects.get_or_create(name=dependency_name)
@@ -99,6 +100,8 @@ class PackageVersion(models.Model):
             )  # TODO Think about behaviour when someone has multiple requirements with duplicate package names!
             dependency.specification = spec
             dependency.save()
+            dependencies.append(dependency)
+        return dependencies
 
 
 class Dependency(models.Model):
