@@ -9,14 +9,16 @@
 		{% for pv in package.packageversion_set.all %}
 			<li>
 				<h3>{{ pv.version }}</h3>
-				{% if pv.fetched %}
-					<a href={% url 'parse-setuppy' name=package.name version=pv.version  %}>Parse setup.py</a>
-					<pre>{{ pv.setuppy|linebreaksbr }}</pre>
-				{% else %}
-					<form action="{% url 'fetch-setuppy' name=package.name version=pv.version %}" method="post">
-						{% csrf_token %}
-						<input type="submit" value="Fetch setup.py" />
-					</form>
+				<pre>{{ pv.setuppy|linebreaksbr }}</pre>
+				{% if user.is_authenticated %}
+					{% if pv.fetched %}
+						<a href={% url 'parse-setuppy' name=package.name version=pv.version  %}>Parse setup.py</a>
+					{% else %}
+						<form action="{% url 'fetch-setuppy' name=package.name version=pv.version %}" method="post">
+							{% csrf_token %}
+							<input type="submit" value="Fetch setup.py" />
+						</form>
+					{% endif %}
 				{% endif %}
 			</li>
 		{% endfor %}
