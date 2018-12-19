@@ -2,6 +2,7 @@
 
 {% block content %}
 	{% if user.is_authenticated %}
+		<h2>Add Package</h2>
 		<form action="{% url 'add-package' %}" method="POST">{% csrf_token %}
 			{{ add_package_form.as_p }}
 			<input type="submit" value="Add Package">
