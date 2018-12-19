@@ -1,3 +1,10 @@
+{% if user.is_authenticated %}
+	<form action="{% url 'add-package' %}" method="POST">{% csrf_token %}
+		{{ add_package_form.as_p }}
+		<input type="submit" value="Add Package">
+	</form>
+{% endif %}
+
 <table>
 	{% for package in package_list %}
 		<tr>
@@ -47,10 +54,3 @@
 		</tr>
 	{% endfor %}
 </table>
-
-{% if user.is_authenticated %}
-	<form action="{% url 'add-package' %}" method="POST">{% csrf_token %}
-		{{ add_package_form.as_p }}
-		<input type="submit" value="Add Package">
-	</form>
-{% endif %}
