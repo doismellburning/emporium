@@ -19,6 +19,7 @@ from django.urls import include, path
 from .views import (
     AddPackageView,
     DependencyDotData,
+    DependencyDotGraph,
     FetchLatestPackageVersionView,
     FetchSetuppyView,
     PackageDetailView,
@@ -49,4 +50,5 @@ urlpatterns = [
         name="parse-setuppy",
     ),
     path("dot/", DependencyDotData.as_view(), name="dot"),
+    path("graph/", DependencyDotGraph.as_view(), name="graph"),
 ]

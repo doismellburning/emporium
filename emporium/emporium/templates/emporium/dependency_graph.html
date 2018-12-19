@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/viz.js/2.1.2/viz.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/viz.js/2.1.2/full.render.js"></script>
+	<script>
+		var viz = new Viz();
+	
+		var data = `
+digraph G {
+	{% for dependency in dependencies %}
+		"{{ dependency.package_version.package.name }}" -> "{{ dependency.package.name }}"
+	{% endfor %}
+}
+`;
+
+		viz.renderSVGElement(data, {engine: "fdp"})
+		.then(function(element) {
+		  document.body.appendChild(element);
+		});
+	</script>
+
+{% endblock %}

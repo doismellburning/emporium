@@ -92,3 +92,8 @@ class DependencyDotData(TemplateView):
         )  # TODO: Crude, doesn't unique by package or limit to latest PV
         # PackageVersion.objects.order_by("-version").distinct("version")
         return context
+
+
+class DependencyDotGraph(DependencyDotData):
+    template_name = "emporium/dependency_graph.html"
+    content_type = "text/html"
