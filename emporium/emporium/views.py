@@ -53,6 +53,15 @@ class FetchLatestPackageVersionView(LoginRequiredMixin, View, SingleObjectMixin)
         return redirect(reverse_lazy("packages"))
 
 
+class FetchLatestPackageVersionsView(LoginRequiredMixin, View):
+    http_method_names = ["post"]
+
+    def post(self, request, *args, **kwargs):
+        for package in Package.objects.all():
+            django_rq.enqueue(fetch_latest_version, package.name)
+        return redirect(reverse_lazy("packages"))
+
+
 class FetchSetuppyView(LoginRequiredMixin, View, SingleObjectMixin):
     model = PackageVersion
     http_method_names = ["post"]

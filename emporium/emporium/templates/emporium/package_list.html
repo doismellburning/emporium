@@ -9,6 +9,12 @@
 		</form>
 	{% endif %}
 
+	{% if user.is_authenticated %}
+		<form action="{% url 'fetch-latest-package-versions' %}" method="POST">{% csrf_token %}
+			<input type="submit" value="Fetch ALL latest package versions">
+		</form>
+	{% endif %}
+
 	<table>
 		{% for package in package_list %}
 			<tr>
