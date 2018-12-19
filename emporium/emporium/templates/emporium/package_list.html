@@ -1,56 +1,60 @@
-{% if user.is_authenticated %}
-	<form action="{% url 'add-package' %}" method="POST">{% csrf_token %}
-		{{ add_package_form.as_p }}
-		<input type="submit" value="Add Package">
-	</form>
-{% endif %}
+{% extends "base.html" %}
 
-<table>
-	{% for package in package_list %}
-		<tr>
-			<td><a href="{% url 'package' name=package.name %}">{{ package }}</a></td>
-			{% if user.is_authenticated %}
+{% block content %}
+	{% if user.is_authenticated %}
+		<form action="{% url 'add-package' %}" method="POST">{% csrf_token %}
+			{{ add_package_form.as_p }}
+			<input type="submit" value="Add Package">
+		</form>
+	{% endif %}
+
+	<table>
+		{% for package in package_list %}
+			<tr>
+				<td><a href="{% url 'package' name=package.name %}">{{ package }}</a></td>
+				{% if user.is_authenticated %}
+					<td>
+						<form action="{% url 'fetch-latest-package-version' pk=package.id %}" method="post">
+							{% csrf_token %}
+							<input type="submit" value="Fetch latest package version" />
+						</form>
+					</td>
+				{% endif %}
 				<td>
-					<form action="{% url 'fetch-latest-package-version' pk=package.id %}" method="post">
-						{% csrf_token %}
-						<input type="submit" value="Fetch latest package version" />
-					</form>
+					<table>
+						{% for pv in package.packageversion_set.all %}
+							<tr>
+								<td>{{ pv.version }}</td>
+								{% if user.is_authenticated %}
+									<td>
+										{% if not pv.fetched %}
+											<form action="{% url 'fetch-setuppy' name=package.name version=pv.version %}" method="post">
+												{% csrf_token %}
+												<input type="submit" value="Fetch setup.py" />
+											</form>
+										{% endif %}
+									</td>
+									<td>
+										{% if pv.fetched %}
+											<form action="{% url 'parse-setuppy' name=package.name version=pv.version %}" method="post">
+												{% csrf_token %}
+												<input type="submit" value="Parse setup.py" />
+											</form>
+										{% endif %}
+									</td>
+								{% endif %}
+								<td>
+									<ul>
+										{% for dependency in pv.dependency_set.all %}
+											<li>{{ dependency.package.name }} (<code>{{ dependency.specification }}</code>)</li>
+										{% endfor %}
+									</ul>
+								</td>
+							</tr>
+						{% endfor %}
+					</table>
 				</td>
-			{% endif %}
-			<td>
-				<table>
-					{% for pv in package.packageversion_set.all %}
-						<tr>
-							<td>{{ pv.version }}</td>
-							{% if user.is_authenticated %}
-								<td>
-									{% if not pv.fetched %}
-										<form action="{% url 'fetch-setuppy' name=package.name version=pv.version %}" method="post">
-											{% csrf_token %}
-											<input type="submit" value="Fetch setup.py" />
-										</form>
-									{% endif %}
-								</td>
-								<td>
-									{% if pv.fetched %}
-										<form action="{% url 'parse-setuppy' name=package.name version=pv.version %}" method="post">
-											{% csrf_token %}
-											<input type="submit" value="Parse setup.py" />
-										</form>
-									{% endif %}
-								</td>
-							{% endif %}
-							<td>
-								<ul>
-									{% for dependency in pv.dependency_set.all %}
-										<li>{{ dependency.package.name }} (<code>{{ dependency.specification }}</code>)</li>
-									{% endfor %}
-								</ul>
-							</td>
-						</tr>
-					{% endfor %}
-				</table>
-			</td>
-		</tr>
-	{% endfor %}
-</table>
+			</tr>
+		{% endfor %}
+	</table>
+{% endblock %}
