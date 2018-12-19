@@ -27,6 +27,7 @@ from .views import (
 )
 
 urlpatterns = [
+    path("accounts/", include("django.contrib.auth.urls")),
     path("admin/", admin.site.urls),
     path("django-rq/", include("django_rq.urls")),
     path("packages/", PackageListView.as_view(), name="packages"),
