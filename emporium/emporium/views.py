@@ -1,4 +1,5 @@
 import django_rq
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView, View
@@ -31,13 +32,13 @@ class PackageDetailView(DetailView):
         return "name"
 
 
-class AddPackageView(CreateView):
+class AddPackageView(LoginRequiredMixin, CreateView):
     model = Package
     form_class = PackageForm
     success_url = reverse_lazy("packages")
 
 
-class FetchLatestPackageVersionView(View, SingleObjectMixin):
+class FetchLatestPackageVersionView(LoginRequiredMixin, View, SingleObjectMixin):
     model = Package
     http_method_names = ["post"]
 
@@ -47,7 +48,7 @@ class FetchLatestPackageVersionView(View, SingleObjectMixin):
         return redirect(reverse_lazy("packages"))
 
 
-class FetchSetuppyView(View, SingleObjectMixin):
+class FetchSetuppyView(LoginRequiredMixin, View, SingleObjectMixin):
     model = PackageVersion
     http_method_names = ["post"]
 
@@ -62,7 +63,7 @@ class FetchSetuppyView(View, SingleObjectMixin):
         return redirect(reverse_lazy("packages"))
 
 
-class ParseSetuppyView(View, SingleObjectMixin):
+class ParseSetuppyView(LoginRequiredMixin, View, SingleObjectMixin):
     model = PackageVersion
     http_method_names = ["post"]
 
