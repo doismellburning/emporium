@@ -20,6 +20,7 @@ from .views import (
     AddPackageView,
     DependencyDotData,
     DependencyDotGraph,
+    FetchLatestPackageVersionsView,
     FetchLatestPackageVersionView,
     FetchSetuppyView,
     PackageDetailView,
@@ -33,6 +34,11 @@ urlpatterns = [
     path("django-rq/", include("django_rq.urls")),
     path("packages/", PackageListView.as_view(), name="packages"),
     path("packages/add/", AddPackageView.as_view(), name="add-package"),
+    path(
+        "packages/fetch-latest-versions/",
+        FetchLatestPackageVersionsView.as_view(),
+        name="fetch-latest-package-versions",
+    ),
     path(
         "packages/<int:pk>/fetch-latest-version/",
         FetchLatestPackageVersionView.as_view(),
