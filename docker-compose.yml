@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: .
+    environment:
+      ALLOWED_HOSTS: localhost
+      DEBUG: 1
+      SECRET_KEY: notasecret
+      DATABASE_URL: postgres://postgres:password@postgres:5432/postgres
+      REDIS_URL: redis://redis
+    ports:
+      - 8000:8000
+  worker:
+    build:
+      context: .
+    environment:
+      DEBUG: 1
+      SECRET_KEY: notasecret
+      DATABASE_URL: postgres://postgres:password@postgres:5432/postgres
+      REDIS_URL: redis://redis
+    command: pipenv run python emporium/manage.py rqworker default
+  postgres:
+    image: postgres:11
+    environment:
+      POSTGRES_PASSWORD: password
+  redis:
+    image: redis:5
