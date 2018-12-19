@@ -3,6 +3,7 @@
 {% block content %}
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/viz.js/2.1.2/viz.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/viz.js/2.1.2/full.render.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.5.0/dist/svg-pan-zoom.min.js"></script>
 	<script>
 		var viz = new Viz();
 	
@@ -16,7 +17,10 @@ digraph G {
 
 		viz.renderSVGElement(data, {engine: "fdp"})
 		.then(function(element) {
-		  document.body.appendChild(element);
+			element.style.width = "100%";
+			element.style.height = "100%";
+			document.body.appendChild(element);
+			svgPanZoom("svg");
 		});
 	</script>
 
