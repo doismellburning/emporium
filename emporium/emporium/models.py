@@ -112,3 +112,10 @@ class Dependency(models.Model):
     package_version = models.ForeignKey("PackageVersion", on_delete=models.CASCADE)
     package = models.ForeignKey("Package", on_delete=models.CASCADE)
     specification = models.CharField(max_length=1000)
+
+    def __str__(self):
+        return "Dependency(%s -> %s (%s))" % (
+            self.package_version,
+            self.package,
+            self.specification,
+        )
