@@ -1,26 +1,29 @@
-<a href="{% url 'packages' %}">Packages</a>
-<div>
-	<h2>{{ package }}</h2>
-	<form action="{% url 'fetch-latest-package-version' pk=package.id %}" method="post">
-		{% csrf_token %}
-		<input type="submit" value="Fetch latest package version" />
-	</form>
-	<ul>
-		{% for pv in package.packageversion_set.all %}
-			<li>
-				<h3>{{ pv.version }}</h3>
-				<pre>{{ pv.setuppy|linebreaksbr }}</pre>
-				{% if user.is_authenticated %}
-					{% if pv.fetched %}
-						<a href={% url 'parse-setuppy' name=package.name version=pv.version  %}>Parse setup.py</a>
-					{% else %}
-						<form action="{% url 'fetch-setuppy' name=package.name version=pv.version %}" method="post">
-							{% csrf_token %}
-							<input type="submit" value="Fetch setup.py" />
-						</form>
+{% extends "base.html" %}
+
+{% block content %}
+	<div>
+		<h2>{{ package }}</h2>
+		<form action="{% url 'fetch-latest-package-version' pk=package.id %}" method="post">
+			{% csrf_token %}
+			<input type="submit" value="Fetch latest package version" />
+		</form>
+		<ul>
+			{% for pv in package.packageversion_set.all %}
+				<li>
+					<h3>{{ pv.version }}</h3>
+					<pre>{{ pv.setuppy|linebreaksbr }}</pre>
+					{% if user.is_authenticated %}
+						{% if pv.fetched %}
+							<a href={% url 'parse-setuppy' name=package.name version=pv.version  %}>Parse setup.py</a>
+						{% else %}
+							<form action="{% url 'fetch-setuppy' name=package.name version=pv.version %}" method="post">
+								{% csrf_token %}
+								<input type="submit" value="Fetch setup.py" />
+							</form>
+						{% endif %}
 					{% endif %}
-				{% endif %}
-			</li>
-		{% endfor %}
-	</ul>
-</div>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+{% endblock %}

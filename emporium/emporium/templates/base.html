@@ -4,6 +4,13 @@
 		<title>Emporium</title>
 	</head>
 	<body>
+		<h1>Emporium</h1>
+
+		<ul>
+			<li><a href="{% url 'packages' %}">Packages</a></li>
+			<li><a href="{% url 'graph' %}">Graph</a></li>
+		</ul>
+
 		{% block content %}
 		{% endblock %}
 	</body>
