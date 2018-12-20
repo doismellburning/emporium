@@ -4,6 +4,8 @@ services:
   web:
     build:
       context: .
+    volumes:
+      - .:/opt/emporium
     environment:
       ALLOWED_HOSTS: localhost
       DEBUG: 1
@@ -12,9 +14,12 @@ services:
       REDIS_URL: redis://redis
     ports:
       - 8000:8000
+    command: pipenv run python emporium/manage.py runserver 0.0.0.0:8000
   worker:
     build:
       context: .
+    volumes:
+      - .:/opt/emporium
     environment:
       DEBUG: 1
       SECRET_KEY: notasecret
