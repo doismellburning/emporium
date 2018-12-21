@@ -19,14 +19,21 @@
 		{% for package in package_list %}
 			<tr>
 				<td><a href="{% url 'package' name=package.name %}">{{ package }}</a></td>
-				{% if user.is_authenticated %}
-					<td>
-						<form action="{% url 'fetch-latest-package-version' pk=package.id %}" method="post">
-							{% csrf_token %}
-							<input type="submit" value="Fetch latest package version" />
-						</form>
-					</td>
-				{% endif %}
+				<td>
+					<ul>
+						{% for pv in package.packageversion_set.all %}
+							<li>{{ pv.version }}</li>
+							{% if user.is_authenticated %}
+								<li>
+									<form action="{% url 'fetch-latest-package-version' pk=package.id %}" method="post">
+										{% csrf_token %}
+										<input type="submit" value="Fetch latest package version" />
+									</form>
+								</li>
+							{% endif %}
+						{% endfor %}
+					</ul>
+				</td>
 				{% with package.get_latest_version as pv %}
 					<td>{{ pv.version }}</td>
 					{% if user.is_authenticated %}
