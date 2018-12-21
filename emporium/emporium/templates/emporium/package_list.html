@@ -27,40 +27,34 @@
 						</form>
 					</td>
 				{% endif %}
-				<td>
-					<table>
-						{% for pv in package.packageversion_set.all %}
-							<tr>
-								<td>{{ pv.version }}</td>
-								{% if user.is_authenticated %}
-									<td>
-										{% if not pv.fetched %}
-											<form action="{% url 'fetch-setuppy' name=package.name version=pv.version %}" method="post">
-												{% csrf_token %}
-												<input type="submit" value="Fetch setup.py" />
-											</form>
-										{% endif %}
-									</td>
-									<td>
-										{% if pv.fetched %}
-											<form action="{% url 'parse-setuppy' name=package.name version=pv.version %}" method="post">
-												{% csrf_token %}
-												<input type="submit" value="Parse setup.py" />
-											</form>
-										{% endif %}
-									</td>
-								{% endif %}
-								<td>
-									<ul>
-										{% for dependency in pv.dependency_set.all %}
-											<li>{{ dependency.package.name }} (<code>{{ dependency.specification }}</code>)</li>
-										{% endfor %}
-									</ul>
-								</td>
-							</tr>
-						{% endfor %}
-					</table>
-				</td>
+				{% with package.get_latest_version as pv %}
+					<td>{{ pv.version }}</td>
+					{% if user.is_authenticated %}
+						<td>
+							{% if not pv.fetched %}
+								<form action="{% url 'fetch-setuppy' name=package.name version=pv.version %}" method="post">
+									{% csrf_token %}
+									<input type="submit" value="Fetch setup.py" />
+								</form>
+							{% endif %}
+						</td>
+						<td>
+							{% if pv.fetched %}
+								<form action="{% url 'parse-setuppy' name=package.name version=pv.version %}" method="post">
+									{% csrf_token %}
+									<input type="submit" value="Parse setup.py" />
+								</form>
+							{% endif %}
+						</td>
+					{% endif %}
+					<td>
+						<ul>
+							{% for dependency in pv.dependency_set.all %}
+								<li>{{ dependency.package.name }} (<code>{{ dependency.specification }}</code>)</li>
+							{% endfor %}
+						</ul>
+					</td>
+				{% endwith %}
 			</tr>
 		{% endfor %}
 	</table>

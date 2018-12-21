@@ -16,6 +16,12 @@ class Package(models.Model):
     def __str__(self):
         return self.name
 
+    def get_latest_version(self) -> Optional["PackageVersion"]:
+        try:
+            return self.packageversion_set.latest("version")
+        except PackageVersion.DoesNotExist:
+            return None
+
     def fetch_latest_version(self) -> Optional[Tuple["PackageVersion", bool]]:
         """
         Checks PyPI for the latest version, then get_or_create-s an appropriate PackageVersion
