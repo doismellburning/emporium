@@ -14,6 +14,7 @@ from .models import Dependency, Package, PackageVersion
 
 class PackageListView(ListView):
     model = Package
+    paginate_by = 50
 
     def get_queryset(self):
         return super().get_queryset().order_by("name")
