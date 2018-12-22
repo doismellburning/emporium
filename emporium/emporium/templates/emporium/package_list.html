@@ -35,15 +35,15 @@
 					<ul>
 						{% for pv in package.packageversion_set.all %}
 							<li>{{ pv.version }}</li>
-							{% if user.is_authenticated %}
-								<li>
-									<form action="{% url 'fetch-latest-package-version' pk=package.id %}" method="post">
-										{% csrf_token %}
-										<input type="submit" value="Fetch latest package version" />
-									</form>
-								</li>
-							{% endif %}
 						{% endfor %}
+						{% if user.is_authenticated %}
+							<li>
+								<form action="{% url 'fetch-latest-package-version' pk=package.id %}" method="post">
+									{% csrf_token %}
+									<input type="submit" value="Fetch latest package version" />
+								</form>
+							</li>
+						{% endif %}
 					</ul>
 				</td>
 				{% with package.get_latest_version as pv %}
