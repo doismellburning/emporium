@@ -43,6 +43,12 @@
 									<input type="submit" value="Fetch latest package version" />
 								</form>
 							</li>
+							<li>
+								<form action="{% url 'fetch-all-package-versions' pk=package.id %}" method="post">
+									{% csrf_token %}
+									<input type="submit" value="Fetch ALL package versions" />
+								</form>
+							</li>
 						{% endif %}
 					</ul>
 				</td>
