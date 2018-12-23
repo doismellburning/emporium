@@ -20,6 +20,7 @@ from .views import (
     AddPackageView,
     DependencyDotData,
     DependencyDotGraph,
+    FetchAllPackageVersionsView,
     FetchLatestPackageVersionsView,
     FetchLatestPackageVersionView,
     FetchSetuppyView,
@@ -43,6 +44,11 @@ urlpatterns = [
         "packages/<int:pk>/fetch-latest-version/",
         FetchLatestPackageVersionView.as_view(),
         name="fetch-latest-package-version",
+    ),
+    path(
+        "packages/<int:pk>/fetch-all-versions/",
+        FetchAllPackageVersionsView.as_view(),
+        name="fetch-all-package-versions",
     ),
     path("packages/<str:name>/", PackageDetailView.as_view(), name="package"),
     path(

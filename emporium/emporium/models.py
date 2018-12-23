@@ -39,6 +39,23 @@ class Package(models.Model):
         except (KeyError, IndexError):
             return None
 
+    def fetch_all_versions(self) -> Iterable[Tuple["PackageVersion", bool]]:
+        """
+        Checks PyPI for the latest version, then get_or_create-s an appropriate PackageVersion
+        """
+        resp = requests.get("https://pypi.org/pypi/%s/json" % self.name)
+        resp.raise_for_status()
+
+        pv_and_cs = []
+
+        releases = resp.json()["releases"]
+        for release in releases:
+            pv_and_cs.append(
+                PackageVersion.objects.get_or_create(package=self, version=release)
+            )
+
+        return pv_and_cs
+
 
 class PackageVersion(models.Model):
     package = models.ForeignKey("package", on_delete=models.CASCADE)

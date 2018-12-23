@@ -8,7 +8,12 @@ from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 
 from .forms import PackageForm
-from .jobs import fetch_latest_version, fetch_setuppy, parse_dependencies
+from .jobs import (
+    fetch_all_versions,
+    fetch_latest_version,
+    fetch_setuppy,
+    parse_dependencies,
+)
 from .models import Dependency, Package, PackageVersion
 
 
@@ -42,6 +47,16 @@ class AddPackageView(LoginRequiredMixin, CreateView):
         response = super().form_valid(form)
         django_rq.enqueue(fetch_latest_version, self.object.name)
         return response
+
+
+class FetchAllPackageVersionsView(LoginRequiredMixin, View, SingleObjectMixin):
+    model = Package
+    http_method_names = ["post"]
+
+    def post(self, request, *args, **kwargs):
+        package = self.get_object()
+        django_rq.enqueue(fetch_all_versions, package.name)
+        return redirect(reverse_lazy("packages"))
 
 
 class FetchLatestPackageVersionView(LoginRequiredMixin, View, SingleObjectMixin):
