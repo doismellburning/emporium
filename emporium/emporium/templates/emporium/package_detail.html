@@ -3,14 +3,16 @@
 {% block content %}
 	<div>
 		<h2>{{ package }}</h2>
-		<form action="{% url 'fetch-latest-package-version' pk=package.id %}" method="post">
-			{% csrf_token %}
-			<input type="submit" value="Fetch latest package version" />
-		</form>
-		<form action="{% url 'fetch-all-package-versions' pk=package.id %}" method="post">
-			{% csrf_token %}
-			<input type="submit" value="Fetch ALL package versions" />
-		</form>
+		{% if user.is_authenticated %}
+			<form action="{% url 'fetch-latest-package-version' pk=package.id %}" method="post">
+				{% csrf_token %}
+				<input type="submit" value="Fetch latest package version" />
+			</form>
+			<form action="{% url 'fetch-all-package-versions' pk=package.id %}" method="post">
+				{% csrf_token %}
+				<input type="submit" value="Fetch ALL package versions" />
+			</form>
+		{% endif %}
 		<ul>
 			{% for pv in package.packageversion_set.all %}
 				<li>
