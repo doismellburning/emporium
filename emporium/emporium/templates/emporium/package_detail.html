@@ -7,6 +7,10 @@
 			{% csrf_token %}
 			<input type="submit" value="Fetch latest package version" />
 		</form>
+		<form action="{% url 'fetch-all-package-versions' pk=package.id %}" method="post">
+			{% csrf_token %}
+			<input type="submit" value="Fetch ALL package versions" />
+		</form>
 		<ul>
 			{% for pv in package.packageversion_set.all %}
 				<li>
