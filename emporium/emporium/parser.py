@@ -18,10 +18,14 @@ def parse_install_requires(setuppy):
     return irf.install_requires
 
 
-class InstallRequiresFinder(ast.NodeVisitor):
+class DependencyFinder(ast.NodeVisitor):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.install_requires = []
+        self.tests_require = []
+        self.extras_require = (
+            []
+        )  # setup.py uses a Dict<Str, List<Str>>, but this stores as List<Str,Str> - closer to the Dependency Model style
 
     def visit_Call(self, node):
         if isinstance(node.func, ast.Name):
@@ -32,6 +36,22 @@ class InstallRequiresFinder(ast.NodeVisitor):
                             keyword.value, ast.List
                         ):
                             self.install_requires = [s.s for s in keyword.value.elts]
+                    elif keyword.arg == "tests_require":
+                        if isinstance(keyword.value, ast.Tuple) or isinstance(
+                            keyword.value, ast.List
+                        ):
+                            self.tests_requires = [s.s for s in keyword.value.elts]
+                    elif keyword.arg == "extras_require":
+                        if isinstance(keyword.value, ast.Dict):
+                            # I'd really love to just have the dict here, but that seems tricky
+                            # So instead, time to fluffle `Dict(expr* keys, expr* values)`
+                            kvs = zip(keyword.value.keys, keyword.value.values)
+                            for (k, v) in kvs:
+                                if isinstance(k, ast.Str) and (
+                                    isinstance(v, ast.Tuple) or isinstance(v, ast.List)
+                                ):
+                                    for elt in v.elts:
+                                        self.extras_require.append(k, elt)
 
         self.generic_visit(node)
 
