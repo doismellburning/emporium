@@ -11,11 +11,11 @@ import parsley
 import pep508
 
 
-def parse_install_requires(setuppy):
+def parse_dependencies(setuppy):
     tree = ast.parse(setuppy)
-    irf = InstallRequiresFinder()
-    irf.visit(tree)
-    return irf.install_requires
+    dependency_finder = DependencyFinder()
+    dependency_finder.visit(tree)
+    return dependency_finder
 
 
 class DependencyFinder(ast.NodeVisitor):
