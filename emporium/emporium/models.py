@@ -150,6 +150,8 @@ class PackageVersion(models.Model):
 class Dependency(models.Model):
     """
     "Version 2 of Package Foo depends on Package Bar with some qualifiers"
+
+    There's three kinds of dependency, and I wish I had sum types to be able to express them: install_requires (tests_require True, extra blank), tests_require (tests_require True, extra blank), and extras_require (tests_require False, extra set to the extra name). If both tests_require and extra are set, sadness ensues, so let's not do that.
     """
 
     class Meta:
@@ -158,6 +160,12 @@ class Dependency(models.Model):
     package_version = models.ForeignKey("PackageVersion", on_delete=models.CASCADE)
     package = models.ForeignKey("Package", on_delete=models.CASCADE)
     specification = models.CharField(max_length=1000)
+    tests_require = models.BooleanField(
+        default=False
+    )  # If true, it's a test dependency, if false could be IR/extra
+    extra = models.CharField(
+        blank=True, max_length=1000
+    )  # If set, it's an extra dependency
 
     def __str__(self):
         return "Dependency(%s -> %s (%s))" % (
