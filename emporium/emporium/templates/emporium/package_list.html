@@ -76,7 +76,7 @@
 						<td>
 							<ul>
 								{% for dependency in pv.dependency_set.all %}
-									<li>{{ dependency.package.name }} (<code>{{ dependency.specification }}</code>)</li>
+									<li><a href="{% url 'package' name=dependency.package.name %}">{{ dependency.package.name }}</a> (<code>{{ dependency.specification }}</code>)</li>
 								{% endfor %}
 							</ul>
 						</td>
