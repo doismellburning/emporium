@@ -155,10 +155,10 @@
         },
         "redis": {
             "hashes": [
-                "sha256:74c892041cba46078ae1ef845241548baa3bd3634f9a6f0f952f006eb1619c71",
-                "sha256:7ba8612bbfd966dea8c62322543fed0095da2834dbd5a7c124afbc617a156aa7"
+                "sha256:724932360d48e5407e8f82e405ab3650a36ed02c7e460d1e6fddf0f038422b54",
+                "sha256:9b19425a38fd074eb5795ff2b0d9a55b46a44f91f5347995f27e3ad257a7d775"
             ],
-            "version": "==3.1.0"
+            "version": "==3.2.0"
         },
         "requests": {
             "hashes": [
@@ -177,11 +177,11 @@
         },
         "sentry-sdk": {
             "hashes": [
-                "sha256:131e3b9ac11dffd86fe4f1f5d388d3dab372fc9e30d6611d1fc87096a1d67359",
-                "sha256:e925a2363178c211ad787f507cedda12ee5b0aadf5ac390950140393636a80bb"
+                "sha256:6f4e264d0ad6267c40e20431a6a50f815515805ffe8eb9815340adf931279523",
+                "sha256:ded1a85821d555dd68abdc0a8e7e4eee7b096f8a6d7a4821228b52a62a465f07"
             ],
             "index": "pypi",
-            "version": "==0.7.2"
+            "version": "==0.7.3"
         },
         "six": {
             "hashes": [
