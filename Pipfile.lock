@@ -302,11 +302,10 @@
         },
         "isort": {
             "hashes": [
-                "sha256:4081fc7f82441527eb4fdb9b4162546c55d4a7441c4de50cd1a17e30bb82d1a7",
-                "sha256:d05a79a16b3ea1aea19d82d29352fde3420170b7c9377ff02138d16b684788fe"
+                "sha256:f19b23b22fb5a919a081bc31aabcc0991614c244d9215267e11abf2ca7b684ce"
             ],
             "index": "pypi",
-            "version": "==4.3.5"
+            "version": "==4.3.9"
         },
         "mccabe": {
             "hashes": [
