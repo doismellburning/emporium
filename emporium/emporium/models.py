@@ -2,6 +2,7 @@ from typing import Iterable, Optional, Tuple
 
 import requests
 from django.db import models
+from django.urls import reverse
 
 from . import parser, sdist, validators
 
@@ -15,6 +16,9 @@ class Package(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("package", kwargs={"name": self.name})
 
     def get_latest_version(self) -> Optional["PackageVersion"]:
         try:

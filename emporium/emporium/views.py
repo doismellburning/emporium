@@ -56,7 +56,7 @@ class FetchAllPackageVersionsView(LoginRequiredMixin, View, SingleObjectMixin):
     def post(self, request, *args, **kwargs):
         package = self.get_object()
         django_rq.enqueue(fetch_all_versions, package.name)
-        return redirect(reverse_lazy("packages"))
+        return redirect(self.get_object().get_absolute_url())
 
 
 class FetchLatestPackageVersionView(LoginRequiredMixin, View, SingleObjectMixin):
@@ -66,7 +66,7 @@ class FetchLatestPackageVersionView(LoginRequiredMixin, View, SingleObjectMixin)
     def post(self, request, *args, **kwargs):
         package = self.get_object()
         django_rq.enqueue(fetch_latest_version, package.name)
-        return redirect(reverse_lazy("packages"))
+        return redirect(self.get_object().get_absolute_url())
 
 
 class FetchLatestPackageVersionsView(LoginRequiredMixin, View):
