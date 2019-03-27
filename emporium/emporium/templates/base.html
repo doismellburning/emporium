@@ -9,12 +9,22 @@
 		<title>Emporium</title>
 	</head>
 	<body>
-		<h1>Emporium</h1>
-
-		<ul>
-			<li><a href="{% url 'packages' %}">Packages</a></li>
-			<li><a href="{% url 'graph' %}">Graph</a></li>
-		</ul>
+		<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+			<a class="navbar-brand" href="/">Emporium</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarCollapse">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'packages' %}">Packages</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'graph' %}">Graph</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
 
 		{% block content %}
 		{% endblock %}
