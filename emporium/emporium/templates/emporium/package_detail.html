@@ -1,45 +1,58 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<div>
-		<h2>{{ package }}</h2>
-		{% if user.is_authenticated %}
+	<h1>{{ package }}</h1>
+
+	{% if user.is_authenticated %}
+		<div class="btn-group" role="group">
 			<form action="{% url 'fetch-latest-package-version' pk=package.id %}" method="post">
 				{% csrf_token %}
-				<input type="submit" value="Fetch latest package version" />
+				<input class="btn btn-lg btn-primary" type="submit" value="Fetch latest package version" />
 			</form>
+			<span>&nbsp;</span>
 			<form action="{% url 'fetch-all-package-versions' pk=package.id %}" method="post">
 				{% csrf_token %}
-				<input type="submit" value="Fetch ALL package versions" />
+				<input class="btn btn-lg btn-warning" type="submit" value="Fetch ALL package versions" />
 			</form>
-		{% endif %}
-		<ul>
-			{% for pv in package.packageversion_set.all %}
-				<li>
-					<h3>{{ pv.version }}</h3>
+		</div>
+	{% endif %}
 
-					<h4>Depends On</h4>
-					<ul>
-						{% for dependency in pv.dependency_set.all %}
-							<li><a href="{% url 'package' name=dependency.package.name %}">{{ dependency.package.name }}</a> (<code>{{ dependency.specification }}</code>)</li>
-						{% endfor %}
-					</ul>
+	<div class="accordion" id="accordion">
+		{% for pv in package.packageversion_set.all %}
+			<div class="card">
+				<div class="card-header" id="heading-{{ pv.id }}">
+					<h3>
+						<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-{{ pv.id }}" aria-expanded="true" aria-controls="collapse-{{ pv.id }}">
+							{{ pv.version }}
+						</button>
+					</h3>
+				</div>
 
-					<h4><code>setup.py</code></h4>
-					<pre>{{ pv.setuppy|linebreaksbr }}</pre>
+				<div id="collapse-{{ pv.id }}" class="collapse {% if forloop.first %}show{% endif %}" aria-labelledby="heading-{{ pv.id }}" data-parent="#accordion">
+					<div class="card-body">
+						<h4>Depends On</h4>
+						<ul>
+							{% for dependency in pv.dependency_set.all %}
+								<li><a href="{% url 'package' name=dependency.package.name %}">{{ dependency.package.name }}</a> (<code>{{ dependency.specification }}</code>)</li>
+							{% endfor %}
+						</ul>
 
-					{% if user.is_authenticated %}
-						{% if pv.fetched %}
-							<a href={% url 'parse-setuppy' name=package.name version=pv.version  %}>Parse setup.py</a>
-						{% else %}
-							<form action="{% url 'fetch-setuppy' name=package.name version=pv.version %}" method="post">
-								{% csrf_token %}
-								<input type="submit" value="Fetch setup.py" />
-							</form>
+						<h4><code>setup.py</code></h4>
+						<pre>{{ pv.setuppy|linebreaksbr }}</pre>
+
+						{% if user.is_authenticated %}
+							{% if pv.fetched %}
+								<a href={% url 'parse-setuppy' name=package.name version=pv.version  %}>Parse setup.py</a>
+							{% else %}
+								<form action="{% url 'fetch-setuppy' name=package.name version=pv.version %}" method="post">
+									{% csrf_token %}
+									<input type="submit" value="Fetch setup.py" />
+								</form>
+							{% endif %}
 						{% endif %}
-					{% endif %}
-				</li>
-			{% endfor %}
-		</ul>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
 	</div>
 {% endblock %}
