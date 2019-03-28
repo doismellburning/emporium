@@ -3,6 +3,7 @@ from typing import Iterable, Optional, Tuple
 import requests
 from django.db import models
 from django.urls import reverse
+from packaging.version import parse as parse_version
 
 from . import parser, sdist, validators
 
@@ -20,14 +21,19 @@ class Package(models.Model):
     def get_absolute_url(self):
         return reverse("package", kwargs={"name": self.name})
 
-    def get_sorted_versions(self):
-        return self.packageversion_set.all()  # TODO!
+    def get_sorted_versions(self, reverse=False):
+        versions = self.packageversion_set.all()
+        return sorted(
+            versions, key=lambda pv: parse_version(pv.version), reverse=reverse
+        )
+
+    def get_sorted_versions_descending(self):
+        # For templates
+        return self.get_sorted_versions(reverse=True)
 
     def get_latest_version(self) -> Optional["PackageVersion"]:
-        try:
-            return self.packageversion_set.latest("version")
-        except PackageVersion.DoesNotExist:
-            return None
+        versions = self.get_sorted_versions_descending()
+        return versions[0] if versions else None
 
     def fetch_latest_version(self) -> Optional[Tuple["PackageVersion", bool]]:
         """
