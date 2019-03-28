@@ -18,7 +18,7 @@
 	{% endif %}
 
 	<div class="accordion" id="accordion">
-		{% for pv in package.packageversion_set.all %}
+		{% for pv in package.get_sorted_versions %}
 			<div class="card">
 				<div class="card-header" id="heading-{{ pv.id }}">
 					<h3>

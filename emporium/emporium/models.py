@@ -20,6 +20,9 @@ class Package(models.Model):
     def get_absolute_url(self):
         return reverse("package", kwargs={"name": self.name})
 
+    def get_sorted_versions(self):
+        return self.packageversion_set.all()  # TODO!
+
     def get_latest_version(self) -> Optional["PackageVersion"]:
         try:
             return self.packageversion_set.latest("version")

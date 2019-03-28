@@ -39,7 +39,7 @@
 				<td><a href="{% url 'package' name=package.name %}">{{ package }}</a></td>
 				<td>
 					<ul>
-						{% for pv in package.packageversion_set.all %}
+						{% for pv in package.get_sorted_versions %}
 							<li>{{ pv.version }}</li>
 						{% endfor %}
 						{% if user.is_authenticated %}
