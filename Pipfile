@@ -25,6 +25,7 @@ sentry-sdk = "*"
 "pep508" = "*"
 parsley = "*"
 django-rq = "*"
+packaging = "*"
 
 [requires]
 python_version = "3.7"

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "efb45f6993fb2a9048ef3af46aad381ffedbaa6d68070407aab68a7a17df6c80"
+            "sha256": "569b7f7082fcdcfe87b6df278fcef56af01313d29ae4914d1a8180cf099b2948"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -95,6 +95,14 @@
             ],
             "version": "==2.8"
         },
+        "packaging": {
+            "hashes": [
+                "sha256:0c98a5d0be38ed775798ece1b9727178c4469d9c3b4ada66e8e6b7849f8732af",
+                "sha256:9e1cbf8c12b1f1ce0bb5344b8d7ecf66a6f8a6e91bcb0c84593ed6d3ab5c4ab3"
+            ],
+            "index": "pypi",
+            "version": "==19.0"
+        },
         "parsley": {
             "hashes": [
                 "sha256:9444278d47161d5f2be76a767809a3cbe6db4db822f46a4fd7481d4057208d41",
@@ -145,6 +153,13 @@
             ],
             "index": "pypi",
             "version": "==2.7.7"
+        },
+        "pyparsing": {
+            "hashes": [
+                "sha256:66c9268862641abcac4a96ba74506e594c884e3f57690a696d21ad8210ed667a",
+                "sha256:f6c5ef0d7480ad048c054c37632c67fca55299990fff127850181659eea33fc3"
+            ],
+            "version": "==2.3.1"
         },
         "pytz": {
             "hashes": [
