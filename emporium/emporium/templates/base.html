@@ -23,6 +23,18 @@
 						<a class="nav-link" href="{% url 'graph' %}">Graph</a>
 					</li>
 				</ul>
+				{% if request.user.is_superuser %}
+					<span class="navbar-text">
+						<a href="/django-rq/">Jobs</a>:
+						<span id="queue_default_job_count" title="Queued jobs">?</span>
+						/
+						<span id="queue_default_active_count" title="Active jobs">?</span>
+						/
+						<span id="queue_default_finished_count" title="Finished jobs">?</span>
+						/
+						<span id="queue_failed_job_count" title="Failed jobs">?</span>
+					</span>
+				{% endif %}
 			</div>
 		</nav>
 
@@ -31,8 +43,32 @@
 			{% endblock %}
 		</main>
 
-		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+		{% if request.user.is_superuser %}
+			{# Slightly grim - but will do for now #}
+			<script>
+				$(document).ready(function() {
+					(function poll() {
+						$.ajax({
+							url: "/django-rq/stats.json",
+							type: "GET",
+							success: function(data) {
+								// Boo it's a list not a dict - TODO actually look up properly
+								$("#queue_default_job_count").text(data["queues"][0]["jobs"]);
+								$("#queue_default_active_count").text(data["queues"][0]["started_jobs"]);
+								$("#queue_default_finished_count").text(data["queues"][0]["finished_jobs"]);
+								$("#queue_failed_job_count").text(data["queues"][1]["jobs"]);
+							},
+							dataType: "json",
+							complete: setTimeout(function() {poll()}, 1000),
+							timeout: 2000
+						})
+					})();
+				});
+			</script>
+		{% endif %}
 	</body>
 </html>
