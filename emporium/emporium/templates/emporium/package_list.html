@@ -61,6 +61,11 @@
 						{% with package.packageversion_set.count as pvs %}
 							<td>{{ pvs }} version{{ pvs|pluralize }}</td>
 						{% endwith %}
+						<td>
+							<a href="{% url "package-version-dependency-graph" name=pv.package.name version=pv.version %}">
+								Dependency Graph
+							</a>
+						</td>
 						{% if user.is_authenticated %}
 							<td>
 								{% if not pv.fetched %}
