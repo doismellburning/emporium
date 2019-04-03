@@ -145,6 +145,8 @@ class PackageVersionDependencyGraphView(DetailView):
         while len(pv_queue) > 0:
             # print("DEPS: %s || SEEN: %s || QUEUE: %s" % (dependencies, packages_seen, pv_queue))
             pv = pv_queue.pop()
+            if pv is None:
+                continue
             if pv.package.name in packages_seen:
                 continue
             packages_seen.add(pv.package.name)
