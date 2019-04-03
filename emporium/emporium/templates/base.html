@@ -25,13 +25,14 @@
 				</ul>
 				{% if request.user.is_superuser %}
 					<span class="navbar-text">
-						<span id="queue_default_job_count">?</span>
+						Jobs:
+						<span id="queue_default_job_count" title="Queued jobs">?</span>
 						/
-						<span id="queue_default_active_count">?</span>
+						<span id="queue_default_active_count" title="Active jobs">?</span>
 						/
-						<span id="queue_default_finished_count">?</span>
+						<span id="queue_default_finished_count" title="Finished jobs">?</span>
 						/
-						<span id="queue_failed_job_count">?</span>
+						<span id="queue_failed_job_count" title="Failed jobs">?</span>
 					</span>
 				{% endif %}
 			</div>
