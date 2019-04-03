@@ -25,7 +25,7 @@
 				</ul>
 				{% if request.user.is_superuser %}
 					<span class="navbar-text">
-						Jobs:
+						<a href="/django-rq/">Jobs</a>:
 						<span id="queue_default_job_count" title="Queued jobs">?</span>
 						/
 						<span id="queue_default_active_count" title="Active jobs">?</span>
