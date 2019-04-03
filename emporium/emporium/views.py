@@ -123,3 +123,34 @@ class DependencyDotData(ListView):
 class DependencyDotGraph(DependencyDotData):
     template_name = "emporium/dependency_graph.html"
     content_type = "text/html"
+
+
+class PackageVersionDependencyGraphView(DetailView):
+    # TODO Sort better abstraction
+    model = PackageVersion
+    template_name = "emporium/dependency_graph.html"
+
+    def get_object(self, queryset=None):
+        return PackageVersion.objects.get(
+            package__name=self.kwargs.get("name"), version=self.kwargs.get("version")
+        )
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+
+        # TODO Better way that doesn't involve all the DB hits?
+        dependencies = []
+        packages_seen = set()
+        pv_queue = [self.object]
+        while len(pv_queue) > 0:
+            # print("DEPS: %s || SEEN: %s || QUEUE: %s" % (dependencies, packages_seen, pv_queue))
+            pv = pv_queue.pop()
+            if pv.package.name in packages_seen:
+                continue
+            packages_seen.add(pv.package.name)
+            deps = pv.dependency_set.all()
+            pv_queue.extend([dep.package.get_latest_version() for dep in deps])
+            dependencies.extend(deps)
+
+        ctx["dependencies"] = dependencies
+        return ctx
