@@ -108,20 +108,15 @@ class ParseSetuppyView(LoginRequiredMixin, View, SingleObjectMixin):
         return redirect(reverse_lazy("packages"))
 
 
-class DependencyDotData(TemplateView):
+class DependencyDotData(ListView):
     template_name = "emporium/dependency_dot_data.dot"
-    # content_type = "text/vnd.graphviz"
     content_type = "text/plain"
+    context_object_name = "dependencies"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context[
-            "dependencies"
-        ] = (
-            Dependency.objects.all()
-        )  # TODO: Crude, doesn't unique by package or limit to latest PV
+    def get_queryset(self):
+        # TODO: Crude, doesn't unique by package or limit to latest PV
         # PackageVersion.objects.order_by("-version").distinct("version")
-        return context
+        return Dependency.objects.all()
 
 
 class DependencyDotGraph(DependencyDotData):
