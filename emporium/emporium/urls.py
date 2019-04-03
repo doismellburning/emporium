@@ -26,6 +26,7 @@ from .views import (
     FetchSetuppyView,
     PackageDetailView,
     PackageListView,
+    PackageVersionDependencyGraphView,
     ParseSetuppyView,
 )
 
@@ -60,6 +61,11 @@ urlpatterns = [
         "packages/<str:name>/<str:version>/parse/",
         ParseSetuppyView.as_view(),
         name="parse-setuppy",
+    ),
+    path(
+        "packages/<str:name>/<str:version>/graph/",
+        PackageVersionDependencyGraphView.as_view(),
+        name="package-version-dependency-graph",
     ),
     path("dot/", DependencyDotData.as_view(), name="dot"),
     path("graph/", DependencyDotGraph.as_view(), name="graph"),
