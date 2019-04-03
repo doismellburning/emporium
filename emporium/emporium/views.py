@@ -2,7 +2,7 @@ import django_rq
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic.base import TemplateView, View
+from django.views.generic.base import View
 from django.views.generic.detail import DetailView, SingleObjectMixin
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
@@ -114,9 +114,10 @@ class DependencyDotData(ListView):
     context_object_name = "dependencies"
 
     def get_queryset(self):
-        # TODO: Crude, doesn't unique by package or limit to latest PV
-        # PackageVersion.objects.order_by("-version").distinct("version")
-        return Dependency.objects.all()
+        # TODO: Doesn't limit to latest PV!
+        return Dependency.objects.distinct(
+            "package_version__package__name", "package__name"
+        )
 
 
 class DependencyDotGraph(DependencyDotData):
