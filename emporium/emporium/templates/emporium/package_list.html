@@ -58,6 +58,9 @@
 				{% with package.get_latest_version as pv %}
 					{% if pv %}
 						<td>{{ pv.version }}</td>
+						{% with package.packageversion_set.count as pvs %}
+							<td>{{ pvs }} version{{ pvs|pluralize }}</td>
+						{% endwith %}
 						{% if user.is_authenticated %}
 							<td>
 								{% if not pv.fetched %}
