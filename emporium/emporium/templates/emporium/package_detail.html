@@ -17,6 +17,17 @@
 		</div>
 	{% endif %}
 
+	<div>
+		<h2>Depended on by</h2>
+		{% for dep in package.get_dependents %}
+			<ul>
+				<li>
+					<a href="{% url "package" name=dep.name %}">{{ dep.name }}</a>
+				</li>
+			</ul>
+		{% endfor %}
+	</div>
+
 	<div class="accordion" id="accordion">
 		{% for pv in package.get_sorted_versions_descending %}
 			<div class="card">

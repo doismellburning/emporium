@@ -35,6 +35,13 @@ class Package(models.Model):
         versions = self.get_sorted_versions_descending()
         return versions[0] if versions else None
 
+    def get_dependents(self):
+        return (
+            self.__class__.objects.filter(packageversion__dependency__package=self)
+            .order_by("name")
+            .distinct()
+        )
+
     def fetch_latest_version(self) -> Optional[Tuple["PackageVersion", bool]]:
         """
         Checks PyPI for the latest version, then get_or_create-s an appropriate PackageVersion
