@@ -3,6 +3,10 @@
 {% block content %}
 	<h1>Packages</h1>
 
+	<p>
+		{{ package_count }} packages, {{ packageversion_count }} versions, {{ dependency_count }} dependencies
+	</p>
+
 	{% if user.is_authenticated %}
 		<div class="row">
 			<div class="col-12 border m-5 p-5">
