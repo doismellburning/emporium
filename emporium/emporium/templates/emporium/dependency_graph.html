@@ -1,27 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/viz.js/2.1.2/viz.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/viz.js/2.1.2/full.render.js"></script>
+	<div id="graphDiv">
+		graph TD
+			{% for dependency in dependencies %}
+				{{ dependency.package_version.package.name }} --> {{ dependency.package.name }};
+			{% endfor %}
+	</div>
+{% endblock %}
+
+{% block javascript %}
+	<script src="https://unpkg.com/mermaid@8.0.0/dist/mermaid.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.5.0/dist/svg-pan-zoom.min.js"></script>
 	<script>
-		var viz = new Viz();
-	
-		var data = `
-digraph G {
-	{% for dependency in dependencies %}
-		"{{ dependency.package_version.package.name }}" -> "{{ dependency.package.name }}"
-	{% endfor %}
-}
-`;
-
-		viz.renderSVGElement(data, {engine: "fdp"})
-		.then(function(element) {
-			element.style.width = "100%";
-			element.style.height = "100%";
-			document.body.appendChild(element);
-			svgPanZoom("svg");
+		mermaidAPI = mermaid.mermaidAPI
+		mermaidAPI.initialize({
+			startOnLoad:false
+		});
+		$(function(){
+			var element = $("#graphDiv");
+			var insertSvg = function(svgCode, bindFunctions){
+				element.innerHTML = svgCode;
+			};
+			var graphDefinition = element.text;
+			console.log(graphDefinition);
+			var graph = mermaidAPI.render('graphDiv', graphDefinition, insertSvg);
 		});
 	</script>
-
 {% endblock %}
