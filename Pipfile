@@ -26,6 +26,7 @@ sentry-sdk = "*"
 parsley = "*"
 django-rq = "*"
 packaging = "*"
+feedparser = "*"
 
 [requires]
 python_version = "3.7"
