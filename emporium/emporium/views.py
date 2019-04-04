@@ -28,6 +28,9 @@ class PackageListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["add_package_form"] = PackageForm()
+        context["package_count"] = Package.objects.count()
+        context["packageversion_count"] = PackageVersion.objects.count()
+        context["dependency_count"] = Dependency.objects.count()
         return context
 
 
