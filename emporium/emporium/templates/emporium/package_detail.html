@@ -32,11 +32,10 @@
 		{% for pv in package.get_sorted_versions_descending %}
 			<div class="card">
 				<div class="card-header" id="heading-{{ pv.id }}">
-					<h3>
-						<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-{{ pv.id }}" aria-expanded="true" aria-controls="collapse-{{ pv.id }}">
-							{{ pv.version }}
-						</button>
-					</h3>
+					<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse-{{ pv.id }}" aria-expanded="true" aria-controls="collapse-{{ pv.id }}">
+						{{ pv.version }}
+					</button>
+					<a class="btn btn-info" href="{% url "package-version-dependency-graph" name=pv.package.name version=pv.version %}">Graph</a>
 				</div>
 
 				<div id="collapse-{{ pv.id }}" class="collapse {% if forloop.first %}show{% endif %}" aria-labelledby="heading-{{ pv.id }}" data-parent="#accordion">
