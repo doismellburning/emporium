@@ -21,6 +21,12 @@
 		</form>
 	{% endif %}
 
+	{% if user.is_authenticated %}
+		<form action="{% url 'fetch-pypi-recent-updates' %}" method="POST">{% csrf_token %}
+			<input type="submit" value="Fetch PyPI recent updates">
+		</form>
+	{% endif %}
+
 	{% if is_paginated %}
 		<div class="pagination">
 			{% if page_obj.has_previous %}

@@ -1,5 +1,6 @@
 import django_rq
 
+from .feed import fetch_pypi_recent_updates
 from .models import Package, PackageVersion
 
 
@@ -33,3 +34,14 @@ def parse_dependencies(package_name, package_version):
 
     for dependency in dependencies:
         django_rq.enqueue("emporium.jobs.fetch_latest_version", dependency.package.name)
+
+
+def fetch_and_create_recent_packages():
+    # TODO Cut down on useless work by comparing RSS version with what we have stored
+    # For now, just assume we run this infrequently enough that it will be ok
+
+    package_names = fetch_pypi_recent_updates()
+
+    for package_name in package_names:
+        Package.objects.get_or_create(name=package_name)
+        django_rq.enqueue("emporium.jobs.fetch_latest_version", package_name)

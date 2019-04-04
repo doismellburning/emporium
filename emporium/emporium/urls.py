@@ -23,6 +23,7 @@ from .views import (
     FetchAllPackageVersionsView,
     FetchLatestPackageVersionsView,
     FetchLatestPackageVersionView,
+    FetchPyPIRecentUpdatesView,
     FetchSetuppyView,
     PackageDetailView,
     PackageListView,
@@ -40,6 +41,11 @@ urlpatterns = [
         "packages/fetch-latest-versions/",
         FetchLatestPackageVersionsView.as_view(),
         name="fetch-latest-package-versions",
+    ),
+    path(
+        "packages/fetch-pypi-recent-updates/",
+        FetchPyPIRecentUpdatesView.as_view(),
+        name="fetch-pypi-recent-updates",
     ),
     path(
         "packages/<int:pk>/fetch-latest-version/",

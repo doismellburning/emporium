@@ -10,6 +10,7 @@ from django.views.generic.list import ListView
 from .forms import PackageForm
 from .jobs import (
     fetch_all_versions,
+    fetch_and_create_recent_packages,
     fetch_latest_version,
     fetch_setuppy,
     parse_dependencies,
@@ -75,6 +76,14 @@ class FetchLatestPackageVersionsView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         for package in Package.objects.all():
             django_rq.enqueue(fetch_latest_version, package.name)
+        return redirect(reverse_lazy("packages"))
+
+
+class FetchPyPIRecentUpdatesView(LoginRequiredMixin, View):
+    http_method_names = ["post"]
+
+    def post(self, request, *args, **kwargs):
+        django_rq.enqueue(fetch_and_create_recent_packages)
         return redirect(reverse_lazy("packages"))
 
 
