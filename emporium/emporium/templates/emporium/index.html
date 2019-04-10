@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="text-center my-md-5 pb-md-5">
+	<h1>
+		Explore Python package dependencies within the Emporium
+	</h1>
+	<a class="btn btn-lg btn-primary m-4" href="{% url "packages" %}">Browse the full package list</a>
+</div>
+
+<nav class="navbar navbar-light bg-light">
+	<span class="navbar-text">{{ package_count }} packages</span>
+	<span class="navbar-text">{{ packageversion_count }} versions</span>
+	<span class="navbar-text">{{ dependency_count }} dependencies</span>
+</nav>
+
+<blockquote class="blockquote text-center p-4">
+	Welcome to the National Cheese Emporium!
+	<footer class="blockquote-footer">Michael Palin to John Cleese, in <cite>The Cheese Shop</cite> sketch from <cite>Monty Python's Flying Circus</cite></footer>
+</blockquote>
+
+{% endblock %}
