@@ -25,6 +25,7 @@ from .views import (
     FetchLatestPackageVersionView,
     FetchPyPIRecentUpdatesView,
     FetchSetuppyView,
+    IndexView,
     PackageDetailView,
     PackageListView,
     PackageVersionDependencyGraphView,
@@ -32,6 +33,7 @@ from .views import (
 )
 
 urlpatterns = [
+    path("", IndexView.as_view(), name="index"),
     path("accounts/", include("django.contrib.auth.urls")),
     path("admin/", admin.site.urls),
     path("django-rq/", include("django_rq.urls")),

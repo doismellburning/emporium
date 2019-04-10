@@ -2,7 +2,7 @@ import django_rq
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic.base import View
+from django.views.generic.base import TemplateView, View
 from django.views.generic.detail import DetailView, SingleObjectMixin
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
@@ -16,6 +16,17 @@ from .jobs import (
     parse_dependencies,
 )
 from .models import Dependency, Package, PackageVersion
+
+
+class IndexView(TemplateView):
+    template_name = "emporium/index.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["package_count"] = Package.objects.count()
+        context["packageversion_count"] = PackageVersion.objects.count()
+        context["dependency_count"] = Dependency.objects.count()
+        return context
 
 
 class PackageListView(ListView):
