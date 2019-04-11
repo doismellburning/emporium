@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.views.decorators.cache import cache_page
 
 from .views import (
     AddPackageView,
@@ -37,7 +38,7 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     path("admin/", admin.site.urls),
     path("django-rq/", include("django_rq.urls")),
-    path("packages/", PackageListView.as_view(), name="packages"),
+    path("packages/", cache_page(60)(PackageListView.as_view()), name="packages"),
     path("packages/add/", AddPackageView.as_view(), name="add-package"),
     path(
         "packages/fetch-latest-versions/",
@@ -59,7 +60,11 @@ urlpatterns = [
         FetchAllPackageVersionsView.as_view(),
         name="fetch-all-package-versions",
     ),
-    path("packages/<str:name>/", PackageDetailView.as_view(), name="package"),
+    path(
+        "packages/<str:name>/",
+        cache_page(60)(PackageDetailView.as_view()),
+        name="package",
+    ),
     path(
         "packages/<str:name>/<str:version>/fetch-setuppy/",
         FetchSetuppyView.as_view(),
@@ -72,9 +77,9 @@ urlpatterns = [
     ),
     path(
         "packages/<str:name>/<str:version>/graph/",
-        PackageVersionDependencyGraphView.as_view(),
+        cache_page(60)(PackageVersionDependencyGraphView.as_view()),
         name="package-version-dependency-graph",
     ),
-    path("dot/", DependencyDotData.as_view(), name="dot"),
-    path("graph/", DependencyDotGraph.as_view(), name="graph"),
+    path("dot/", cache_page(60)(DependencyDotData.as_view()), name="dot"),
+    path("graph/", cache_page(60)(DependencyDotGraph.as_view()), name="graph"),
 ]
