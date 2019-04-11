@@ -140,7 +140,7 @@ class DependencyDotData(ListView):
         # TODO: Doesn't limit to latest PV!
         return Dependency.objects.distinct(
             "package_version__package__name", "package__name"
-        )
+        ).select_related("package_version__package", "package")
 
 
 class DependencyDotGraph(DependencyDotData):
