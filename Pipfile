@@ -27,7 +27,6 @@ parsley = "*"
 django-rq = "*"
 packaging = "*"
 feedparser = "*"
-pylibmc = "*"
 
 [requires]
 python_version = "3.7"
