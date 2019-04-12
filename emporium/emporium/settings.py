@@ -33,7 +33,7 @@ CACHES = d12f["CACHES"]
 if "MEMCACHEDCLOUD_SERVERS" in os.environ:
     CACHES = {
         "default": {
-            "BACKEND": "django.core.cache.backends.memcached.PyLibMCCache",
+            "BACKEND": "django_bmemcached.memcached.BMemcached",
             "LOCATION": os.environ.get("MEMCACHEDCLOUD_SERVERS", "").split(","),
             "OPTIONS": {
                 "username": os.environ.get("MEMCACHEDCLOUD_USERNAME"),
