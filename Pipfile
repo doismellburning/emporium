@@ -27,6 +27,7 @@ parsley = "*"
 django-rq = "*"
 packaging = "*"
 feedparser = "*"
+django-bmemcached = "*"
 
 [requires]
 python_version = "3.7"
