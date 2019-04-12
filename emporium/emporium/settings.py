@@ -24,7 +24,25 @@ DEBUG = d12f["DEBUG"]
 ALLOWED_HOSTS = d12f["ALLOWED_HOSTS"]
 SECRET_KEY = d12f["SECRET_KEY"]
 DATABASES = d12f["DATABASES"]
+
 CACHES = d12f["CACHES"]
+
+# TODO Handle CACHE_URL parsing rather than provider-specific handling
+# Couldn't work out how to specify binary:True / multiple servers with a plain URL
+# This is a bit of a hack, but will do for now...
+if "MEMCACHEDCLOUD_SERVERS" in os.environ:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.memcached.PyLibMCCache",
+            "LOCATION": os.environ.get("MEMCACHEDCLOUD_SERVERS", "").split(","),
+            "OPTIONS": {
+                "username": os.environ.get("MEMCACHEDCLOUD_USERNAME"),
+                "password": os.environ.get("MEMCACHEDCLOUD_PASSWORD"),
+                "binary": True,
+            },
+        }
+    }
+
 
 if not DEBUG:
     CSRF_COOKIE_SECURE = True
