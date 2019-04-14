@@ -9,6 +9,7 @@ jobs:
         environment:
           POSTGRES_USER: root
           POSTGRES_DB: circle_test
+      - image: circleci/redis:5.0.4
     steps:
       - checkout
       - run:
