@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_cookie
 
 from .views import (
     AddPackageView,
@@ -33,12 +34,21 @@ from .views import (
     ParseSetuppyView,
 )
 
+
+def cache_page_by_cookie(*args, **kwargs):
+    return lambda x: cache_page(*args, **kwargs)(vary_on_cookie(x))
+
+
 urlpatterns = [
     path("", IndexView.as_view(), name="index"),
     path("accounts/", include("django.contrib.auth.urls")),
     path("admin/", admin.site.urls),
     path("django-rq/", include("django_rq.urls")),
-    path("packages/", cache_page(60)(PackageListView.as_view()), name="packages"),
+    path(
+        "packages/",
+        cache_page_by_cookie(60)(PackageListView.as_view()),
+        name="packages",
+    ),
     path("packages/add/", AddPackageView.as_view(), name="add-package"),
     path(
         "packages/fetch-latest-versions/",
@@ -62,7 +72,7 @@ urlpatterns = [
     ),
     path(
         "packages/<str:name>/",
-        cache_page(60)(PackageDetailView.as_view()),
+        cache_page_by_cookie(60)(PackageDetailView.as_view()),
         name="package",
     ),
     path(
@@ -77,9 +87,11 @@ urlpatterns = [
     ),
     path(
         "packages/<str:name>/<str:version>/graph/",
-        cache_page(60)(PackageVersionDependencyGraphView.as_view()),
+        cache_page_by_cookie(60)(PackageVersionDependencyGraphView.as_view()),
         name="package-version-dependency-graph",
     ),
-    path("dot/", cache_page(60)(DependencyDotData.as_view()), name="dot"),
-    path("graph/", cache_page(60)(DependencyDotGraph.as_view()), name="graph"),
+    path("dot/", cache_page_by_cookie(60)(DependencyDotData.as_view()), name="dot"),
+    path(
+        "graph/", cache_page_by_cookie(60)(DependencyDotGraph.as_view()), name="graph"
+    ),
 ]
