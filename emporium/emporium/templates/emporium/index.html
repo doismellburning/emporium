@@ -8,11 +8,11 @@
 	<a class="btn btn-lg btn-primary m-4" href="{% url "packages" %}">Browse the full package list</a>
 </div>
 
-<nav class="navbar navbar-light bg-light">
-	<span class="navbar-text">{{ package_count }} packages</span>
-	<span class="navbar-text">{{ packageversion_count }} versions</span>
-	<span class="navbar-text">{{ dependency_count }} dependencies</span>
-</nav>
+<div class="row bg-light text-center p-4">
+	<div class="col-md-4">{{ package_count }} packages</div>
+	<div class="col-md-4">{{ packageversion_count }} versions</div>
+	<div class="col-md-4">{{ dependency_count }} dependencies</div>
+</div>
 
 <blockquote class="blockquote text-center p-4">
 	Welcome to the National Cheese Emporium!
