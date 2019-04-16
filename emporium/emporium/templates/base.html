@@ -95,10 +95,11 @@
 							type: "GET",
 							success: function(data) {
 								// Boo it's a list not a dict - TODO actually look up properly
-								$("#queue_default_job_count").text(data["queues"][0]["jobs"]);
-								$("#queue_default_active_count").text(data["queues"][0]["started_jobs"]);
-								$("#queue_default_finished_count").text(data["queues"][0]["finished_jobs"]);
-								$("#queue_failed_job_count").text(data["queues"][1]["jobs"]);
+								var queue = data["queues"][0]
+								$("#queue_default_job_count").text(queue["jobs"]);
+								$("#queue_default_active_count").text(queue["started_jobs"]);
+								$("#queue_default_finished_count").text(queue["finished_jobs"]);
+								$("#queue_failed_job_count").text(queue["failed_jobs"]);
 							},
 							dataType: "json",
 							complete: setTimeout(function() {poll()}, 1000),
