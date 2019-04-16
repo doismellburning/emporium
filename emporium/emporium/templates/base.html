@@ -91,7 +91,7 @@
 				$(document).ready(function() {
 					(function poll() {
 						$.ajax({
-							url: "/django-rq/stats.json",
+							url: "/django-rq/stats.json/",
 							type: "GET",
 							success: function(data) {
 								// Boo it's a list not a dict - TODO actually look up properly
