@@ -46,6 +46,7 @@ if "MEMCACHEDCLOUD_SERVERS" in os.environ:
 
 if not DEBUG:
     CSRF_COOKIE_SECURE = True
+    REFERRER_POLICY = "strict-origin-when-cross-origin"
     SECURE_BROWSER_XSS_FILTER = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
@@ -78,6 +79,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django_referrer_policy.middleware.ReferrerPolicyMiddleware",
 ]
 
 ROOT_URLCONF = "emporium.urls"
