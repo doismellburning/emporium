@@ -44,6 +44,7 @@ if "MEMCACHEDCLOUD_SERVERS" in os.environ:
     }
 
 
+FEATURE_POLICY = {"autoplay": "none"}
 REFERRER_POLICY = "strict-origin-when-cross-origin"
 
 
@@ -74,6 +75,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "django_feature_policy.FeaturePolicyMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
