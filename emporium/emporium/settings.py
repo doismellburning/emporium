@@ -44,9 +44,11 @@ if "MEMCACHEDCLOUD_SERVERS" in os.environ:
     }
 
 
+REFERRER_POLICY = "strict-origin-when-cross-origin"
+
+
 if not DEBUG:
     CSRF_COOKIE_SECURE = True
-    REFERRER_POLICY = "strict-origin-when-cross-origin"
     SECURE_BROWSER_XSS_FILTER = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
