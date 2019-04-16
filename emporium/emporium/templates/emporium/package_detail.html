@@ -47,8 +47,10 @@
 							{% endfor %}
 						</ul>
 
-						<h4><code>setup.py</code></h4>
-						<pre>{{ pv.setuppy|linebreaksbr }}</pre>
+						{% if user.is_authenticated %}
+							<h4><code>setup.py</code></h4>
+							<pre>{{ pv.setuppy|linebreaksbr }}</pre>
+						{% endif %}
 
 						{% if user.is_authenticated %}
 							{% if pv.fetched %}
