@@ -29,6 +29,7 @@ packaging = "*"
 feedparser = "*"
 django-bmemcached = "*"
 django-referrer-policy = "*"
+django-csp = "*"
 
 [requires]
 python_version = "3.7"
