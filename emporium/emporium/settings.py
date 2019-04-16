@@ -46,6 +46,8 @@ if "MEMCACHEDCLOUD_SERVERS" in os.environ:
 
 REFERRER_POLICY = "strict-origin-when-cross-origin"
 
+CSP_DEFAULT_SRC = ("'self'", "'unsafe-inline'", "https:")  # TODO Fix these!
+
 
 if not DEBUG:
     CSRF_COOKIE_SECURE = True
@@ -74,6 +76,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "csp.middleware.CSPMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
