@@ -23,9 +23,10 @@ class DependencyFinder(ast.NodeVisitor):
         super().__init__(*args, **kwargs)
         self.install_requires = []
         self.tests_require = []
-        self.extras_require = (
-            []
-        )  # setup.py uses a Dict<Str, List<Str>>, but this stores as List<Str,Str> - closer to the Dependency Model style
+
+        # setup.py uses a Dict<Str, List<Str>> for extras
+        # but this stores as List<Str,Str> - closer to the Dependency Model style
+        self.extras_require = []
 
     def visit_Call(self, node):
         if isinstance(node.func, ast.Name):
