@@ -9,7 +9,7 @@
 
 	{% if user.is_authenticated %}
 		<div class="row">
-			<div class="col-12 border m-5 p-5">
+			<div class="col-12">
 				<h2>Add Package</h2>
 				<form action="{% url 'add-package' %}" method="POST">{% csrf_token %}
 					{{ add_package_form.as_p }}
@@ -20,26 +20,38 @@
 	{% endif %}
 
 	{% if user.is_authenticated %}
-		<form action="{% url 'fetch-latest-package-versions' %}" method="POST">{% csrf_token %}
-			<input type="submit" value="Fetch ALL latest package versions">
-		</form>
+		<div class="row">
+			<div class="col-12">
+				<form action="{% url 'fetch-latest-package-versions' %}" method="POST">{% csrf_token %}
+					<input type="submit" value="Fetch ALL latest package versions">
+				</form>
+			</div>
+		</div>
 	{% endif %}
 
 	{% if user.is_authenticated %}
-		<form action="{% url 'fetch-pypi-recent-updates' %}" method="POST">{% csrf_token %}
-			<input type="submit" value="Fetch PyPI recent updates">
-		</form>
+		<div class="row">
+			<div class="col-12">
+				<form action="{% url 'fetch-pypi-recent-updates' %}" method="POST">{% csrf_token %}
+					<input type="submit" value="Fetch PyPI recent updates">
+				</form>
+			</div>
+		</div>
 	{% endif %}
 
 	{% if is_paginated %}
-		<div class="pagination">
-			{% if page_obj.has_previous %}
-				<a href="{% url "packages" %}?page={{ page_obj.previous_page_number }}">Previous</a>
-			{% endif %}
-			<span class="page-current">({{ page_obj.number }} of {{ page_obj.paginator.num_pages }})</span>
-			{% if page_obj.has_next %}
-				<a href="{% url "packages" %}?page={{ page_obj.next_page_number }}">Next</a>
-			{% endif %}
+		<div class="row">
+			<div class="col-12">
+				<div class="pagination">
+					{% if page_obj.has_previous %}
+						<a href="{% url "packages" %}?page={{ page_obj.previous_page_number }}">Previous</a>
+					{% endif %}
+					<span class="page-current">({{ page_obj.number }} of {{ page_obj.paginator.num_pages }})</span>
+					{% if page_obj.has_next %}
+						<a href="{% url "packages" %}?page={{ page_obj.next_page_number }}">Next</a>
+					{% endif %}
+				</div>
+			</div>
         </div>
     {% endif %}
 
@@ -108,14 +120,18 @@
 	</table>
 
 	{% if is_paginated %}
-		<div class="pagination">
-			{% if page_obj.has_previous %}
-				<a href="{% url "packages" %}?page={{ page_obj.previous_page_number }}">Previous</a>
-			{% endif %}
-			<span class="page-current">({{ page_obj.number }} of {{ page_obj.paginator.num_pages }})</span>
-			{% if page_obj.has_next %}
-				<a href="{% url "packages" %}?page={{ page_obj.next_page_number }}">Next</a>
-			{% endif %}
+		<div class="row">
+			<div class="col-12">
+				<div class="pagination">
+					{% if page_obj.has_previous %}
+						<a href="{% url "packages" %}?page={{ page_obj.previous_page_number }}">Previous</a>
+					{% endif %}
+					<span class="page-current">({{ page_obj.number }} of {{ page_obj.paginator.num_pages }})</span>
+					{% if page_obj.has_next %}
+						<a href="{% url "packages" %}?page={{ page_obj.next_page_number }}">Next</a>
+					{% endif %}
+				</div>
+			</div>
         </div>
     {% endif %}
 {% endblock %}
