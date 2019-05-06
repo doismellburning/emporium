@@ -55,11 +55,11 @@
         </div>
     {% endif %}
 
-	<table>
-		{% for package in package_list %}
-			<tr>
-				<td><a href="{% url 'package' name=package.name %}">{{ package }}</a></td>
-				<td>
+	<div class="container">
+		<div class="row">
+			{% for package in package_list %}
+				<div class="col">
+					<h3><a href="{% url 'package' name=package.name %}">{{ package }}</a></h2>
 					<ul>
 						{% if user.is_authenticated %}
 							<li>
@@ -76,48 +76,42 @@
 							</li>
 						{% endif %}
 					</ul>
-				</td>
+				</div>
 				{% with package.get_latest_version as pv %}
 					{% if pv %}
-						<td>{{ pv.version }}</td>
+						<div class="col">{{ pv.version }}</div>
 						{% with package.packageversion_set.count as pvs %}
-							<td>{{ pvs }} version{{ pvs|pluralize }}</td>
+							<div class="col">{{ pvs }} version{{ pvs|pluralize }}</div>
 						{% endwith %}
-						<td>
+						<div class="col">
 							<a href="{% url "package-version-dependency-graph" name=pv.package.name version=pv.version %}">
 								Dependency Graph
 							</a>
-						</td>
+						</div>
 						{% if user.is_authenticated %}
-							<td>
+							<div class="col">
 								{% if not pv.fetched %}
 									<form action="{% url 'fetch-setuppy' name=package.name version=pv.version %}" method="post">
 										{% csrf_token %}
 										<input type="submit" value="Fetch setup.py" />
 									</form>
 								{% endif %}
-							</td>
-							<td>
+							</div>
+							<div class="col">
 								{% if pv.fetched %}
 									<form action="{% url 'parse-setuppy' name=package.name version=pv.version %}" method="post">
 										{% csrf_token %}
 										<input type="submit" value="Parse setup.py" />
 									</form>
 								{% endif %}
-							</td>
+							</div>
 						{% endif %}
-						<td>
-							<ul>
-								{% for dependency in pv.dependency_set.all %}
-									<li><a href="{% url 'package' name=dependency.package.name %}">{{ dependency.package.name }}</a> (<code>{{ dependency.specification }}</code>)</li>
-								{% endfor %}
-							</ul>
-						</td>
 					{% endif %}
 				{% endwith %}
-			</tr>
-		{% endfor %}
-	</table>
+				<div class="w-100"></div>
+			{% endfor %}
+		</div>
+	</div>
 
 	{% if is_paginated %}
 		<div class="row">
