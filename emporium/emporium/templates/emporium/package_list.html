@@ -88,24 +88,6 @@
 								Dependency Graph
 							</a>
 						</div>
-						{% if user.is_authenticated %}
-							<div class="col">
-								{% if not pv.fetched %}
-									<form action="{% url 'fetch-setuppy' name=package.name version=pv.version %}" method="post">
-										{% csrf_token %}
-										<input type="submit" value="Fetch setup.py" />
-									</form>
-								{% endif %}
-							</div>
-							<div class="col">
-								{% if pv.fetched %}
-									<form action="{% url 'parse-setuppy' name=package.name version=pv.version %}" method="post">
-										{% csrf_token %}
-										<input type="submit" value="Parse setup.py" />
-									</form>
-								{% endif %}
-							</div>
-						{% endif %}
 					{% endif %}
 				{% endwith %}
 				<div class="w-100"></div>
