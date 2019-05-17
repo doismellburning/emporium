@@ -178,4 +178,6 @@ class PackageVersionDependencyGraphView(DetailView):
             dependencies.extend(deps)
 
         ctx["dependencies"] = dependencies
+        ctx["package_version"] = self.object
+
         return ctx
