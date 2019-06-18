@@ -181,3 +181,8 @@ class PackageVersionDependencyGraphView(DetailView):
         ctx["package_version"] = self.object
 
         return ctx
+
+
+class PackageSearchView(PackageListView):
+    def get_queryset(self):
+        return Package.objects.filter(name__search=self.request.GET.get("q"))
