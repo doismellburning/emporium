@@ -30,6 +30,7 @@ from .views import (
     IndexView,
     PackageDetailView,
     PackageListView,
+    PackageSearchView,
     PackageVersionDependencyGraphView,
     ParseSetuppyView,
 )
@@ -49,6 +50,7 @@ urlpatterns = [
         cache_page_by_cookie(60)(PackageListView.as_view()),
         name="packages",
     ),
+    path("packages/search/", PackageSearchView.as_view(), name="search"),
     path("packages/add/", AddPackageView.as_view(), name="add-package"),
     path(
         "packages/fetch-latest-versions/",
