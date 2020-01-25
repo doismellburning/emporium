@@ -60,10 +60,10 @@
         },
         "django-bmemcached": {
             "hashes": [
-                "sha256:a1f6183b9f9ed0959336ced11ae52506ef322a18dde3f4884b5ec8982b02bb3f"
+                "sha256:4e4b7d97216dbae331c1de10e699ca22804b94ec3a90d2762dd5d146e6986a8a"
             ],
             "index": "pypi",
-            "version": "==0.2.4"
+            "version": "==0.3.0"
         },
         "django-cache-url": {
             "hashes": [
