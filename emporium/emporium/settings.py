@@ -38,7 +38,6 @@ if "MEMCACHEDCLOUD_SERVERS" in os.environ:
             "OPTIONS": {
                 "username": os.environ.get("MEMCACHEDCLOUD_USERNAME"),
                 "password": os.environ.get("MEMCACHEDCLOUD_PASSWORD"),
-                "binary": True,
             },
         }
     }
