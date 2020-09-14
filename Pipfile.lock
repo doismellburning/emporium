@@ -111,11 +111,11 @@
         },
         "feedparser": {
             "hashes": [
-                "sha256:733f7ae6f288f409b3db8fa74f1074484518afc664cba5a1065f78550267e5b4",
-                "sha256:d4885f34627140c9076f43022e3be49e6b80ddb25a6dd1a4d40f795546faec1f"
+                "sha256:351a08b59a373ad358226489750740f052e615bba093cfcc00e3bf742527979c",
+                "sha256:a13fb1f26a7da985b51e6d1e91102fb1b1e5eb5d550a192643049a527bb24b0d"
             ],
             "index": "pypi",
-            "version": "==6.0.0b3"
+            "version": "==6.0.0"
         },
         "gunicorn": {
             "hashes": [
@@ -247,7 +247,6 @@
             "hashes": [
                 "sha256:7868fb1c8bfa764c1ac563d3cf369c381d1325d36124933a726f29fcdaa812e9"
             ],
-            "markers": "python_version >= '3.0'",
             "version": "==1.0.0"
         },
         "six": {
