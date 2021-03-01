@@ -240,10 +240,11 @@
         },
         "sentry-sdk": {
             "hashes": [
-                "sha256:3693cb47ba8d90c004ac002425770b32aaf0c83a846ec48e2d1364e7db1d072d"
+                "sha256:4ae8d1ced6c67f1c8ea51d82a16721c166c489b76876c9f2c202b8a50334b237",
+                "sha256:e75c8c58932bda8cd293ea8e4b242527129e1caaec91433d21b8b2f20fee030b"
             ],
             "index": "pypi",
-            "version": "==0.20.1"
+            "version": "==0.20.3"
         },
         "sgmllib3k": {
             "hashes": [
