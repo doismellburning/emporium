@@ -96,11 +96,11 @@
         },
         "django-rq": {
             "hashes": [
-                "sha256:3851f4eb65358bf13cd179156ae695a8a76e18249f8d1c4b89c0c7efac7e1f6d",
-                "sha256:9dd86d57f35593b2d44f4be9f5cb078313e770cf1a451b910c473394b6a5ff8c"
+                "sha256:23981f83c537178cbbf730f192c13e99cede2204e9d917b1c1c80c42215dd227",
+                "sha256:f09059ab37403a47c7933bca396fabb7f3058732d132462eade5333bc4bcac5f"
             ],
             "index": "pypi",
-            "version": "==2.4.0"
+            "version": "==2.4.1"
         },
         "django12factor": {
             "hashes": [
