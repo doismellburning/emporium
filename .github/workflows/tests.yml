@@ -1,0 +1,43 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.8]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: docker-compose build to warm things up
+      run: |
+        docker-compose build
+    - name: Ensure no fixes apply
+      run: |
+        docker-compose run web pipenv run make bootstrap-dev fix
+        git diff --exit-code # Error if fix changed things, to ensure stability
+    - name: Check
+      run: |
+        docker-compose run web pipenv run make bootstrap-dev check
+    - name: collectstatic
+      run: |
+        docker-compose run web pipenv run make collectstatic
+    - name: Test
+      run: |
+        docker-compose up --detach
+        docker-compose run web pipenv run make bootstrap-dev test
+        docker-compose down
