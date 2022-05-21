@@ -13,6 +13,7 @@ isort = "*"
 "flake8" = "*"
 coverage = "*"
 pytest-cov = "*"
+types-requests = "*"
 
 [packages]
 django = "*"
