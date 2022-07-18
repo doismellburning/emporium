@@ -301,19 +301,19 @@
         },
         "sentry-sdk": {
             "hashes": [
-                "sha256:54cc2db9d85fcad557b2269f72f82f6f6b3a52eb93ae840a02a6eca4d9a0b707",
-                "sha256:741762816cdd32f647fca94a4515098cd52cb09dfe8c78f7d70eb28d2eaf89c5"
+                "sha256:6f460da98b730d671510af18f119f96d01e3ba027ac0e985871abb3aede1c514",
+                "sha256:95fd321f583dfcfaf279a0b2cdc83d8d28c8b7cca4d2959fc4539bb4fecb56a0"
             ],
             "index": "pypi",
-            "version": "==1.7.0"
+            "version": "==1.7.2"
         },
         "setuptools": {
             "hashes": [
-                "sha256:16923d366ced322712c71ccb97164d07472abeecd13f3a6c283f6d5d26722793",
-                "sha256:db3b8e2f922b2a910a29804776c643ea609badb6a32c4bcc226fd4fd902cce65"
+                "sha256:0d33c374d41c7863419fc8f6c10bfe25b7b498aa34164d135c622e52580c6b16",
+                "sha256:c04b44a57a6265fe34a4a444e965884716d34bae963119a76353434d6f18e450"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==63.1.0"
+            "version": "==63.2.0"
         },
         "sgmllib3k": {
             "hashes": [
@@ -698,7 +698,7 @@
                 "sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc",
                 "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"
             ],
-            "markers": "python_full_version < '3.11.0a7'",
+            "markers": "python_version >= '3.7'",
             "version": "==2.0.1"
         },
         "types-requests": {
