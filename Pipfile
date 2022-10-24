@@ -6,7 +6,7 @@ name = "pypi"
 [dev-packages]
 pytest = "*"
 pytest-django = "*"
-black = "==22.8.0"
+black = "==22.10.0"
 mypy = "*"
 isort = "*"
 "autopep8" = "*"
