@@ -277,10 +277,10 @@
         },
         "python-binary-memcached": {
             "hashes": [
-                "sha256:58c19c9a81e112633642bd5a26c1d8c6ac806bd055cf536b5b4bd2da701bc5b1",
-                "sha256:de4056f00a15d054dcf1af87d6cc9564876699e52da954c3ef44e8c5753d4050"
+                "sha256:290f70451e277df6a39aa0eea3cb6ca2eefcf5d601f957cf2ec1d353d7676c03",
+                "sha256:e5b93d54429e835cab7d5b33988649f9748344aa49adaed8eed94b37e714d562"
             ],
-            "version": "==0.31.1"
+            "version": "==0.31.2"
         },
         "redis": {
             "hashes": [
@@ -308,11 +308,11 @@
         },
         "sentry-sdk": {
             "hashes": [
-                "sha256:675f6279b6bb1fea09fd61751061f9a90dca3b5929ef631dd50dc8b3aeb245e9",
-                "sha256:8b4ff696c0bdcceb3f70bbb87a57ba84fd3168b1332d493fcd16c137f709578c"
+                "sha256:5bbe4b72de22f9ac1e67f2a4e6efe8fbd595bb59b7b223443f50fe5802a5551c",
+                "sha256:9f0b960694e2d8bb04db4ba6ac2a645040caef4e762c65937998ff06064f10d6"
             ],
             "index": "pypi",
-            "version": "==1.11.1"
+            "version": "==1.12.1"
         },
         "setuptools": {
             "hashes": [
@@ -357,7 +357,7 @@
                 "sha256:47cc05d99aaa09c9e72ed5809b60e7ba354e64b59c9c173ac3018642d8bb41fc",
                 "sha256:c083dd0dce68dbfbe1129d5271cb90f9447dea7d52097c6e0126120c521ddea8"
             ],
-            "markers": "python_version >= '3.6'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4, 3.5'",
             "version": "==1.26.13"
         },
         "whitenoise": {
@@ -627,7 +627,7 @@
                 "sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc",
                 "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"
             ],
-            "markers": "python_full_version < '3.11.0a7'",
+            "markers": "python_version >= '3.7'",
             "version": "==2.0.1"
         },
         "types-requests": {
