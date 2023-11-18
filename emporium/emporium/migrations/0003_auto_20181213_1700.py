@@ -6,7 +6,6 @@ import emporium.validators
 
 
 class Migration(migrations.Migration):
-
     dependencies = [("emporium", "0002_auto_20181207_1658")]
 
     operations = [

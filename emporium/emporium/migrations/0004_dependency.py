@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [("emporium", "0003_auto_20181213_1700")]
 
     operations = [

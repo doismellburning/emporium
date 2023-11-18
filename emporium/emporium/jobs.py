@@ -8,7 +8,7 @@ def fetch_all_versions(package_name):
     package = Package.objects.get(name=package_name)
     pv_and_cs = package.fetch_all_versions()
 
-    for (pv, created) in pv_and_cs:
+    for pv, created in pv_and_cs:
         if created:
             django_rq.enqueue("emporium.jobs.fetch_setuppy", package_name, pv.version)
 
