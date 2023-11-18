@@ -1,6 +1,10 @@
-version: 2
+version: "2"
 updates:
-- package-ecosystem: pip
-  directory: "/"
-  schedule:
-    interval: weekly
+  - package-ecosystem: "pipenv"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
