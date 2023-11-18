@@ -27,7 +27,7 @@ services:
       REDIS_URL: redis://redis
     command: pipenv run python emporium/manage.py rqworker default
   postgres:
-    image: postgres:11
+    image: postgres:12
     environment:
       POSTGRES_PASSWORD: password
   redis:
