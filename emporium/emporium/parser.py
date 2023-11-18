@@ -52,7 +52,6 @@ def parse_dependency_name(specification: str) -> str:  # TODO Handle errors
 
 
 def parse_dependency_names(setuppy):
-
     install_requires = parse_install_requires(setuppy)
 
     dependency_names = []
