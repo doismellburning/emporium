@@ -6,7 +6,7 @@ name = "pypi"
 [dev-packages]
 pytest = "*"
 pytest-django = "*"
-black = "==23.12.1"
+black = "==24.4.0"
 mypy = "*"
 coverage = "*"
 pytest-cov = "*"
