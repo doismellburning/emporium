@@ -1,7 +1,7 @@
 import django_rq
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.views.generic.base import TemplateView, View
 from django.views.generic.detail import DetailView, SingleObjectMixin
 from django.views.generic.edit import CreateView
@@ -62,6 +62,15 @@ class AddPackageView(LoginRequiredMixin, CreateView):
         response = super().form_valid(form)
         django_rq.enqueue(fetch_latest_version, self.object.name)
         return response
+
+    def form_invalid(self, form):
+        # If there already exists a package, redirect there
+        name = form.data["name"]
+        try:
+            Package.objects.get(name=name)
+            return redirect(reverse("package", kwargs={"name": name}))
+        except Package.DoesNotExist:
+            return super().form_invalid(form)
 
 
 class FetchAllPackageVersionsView(LoginRequiredMixin, View, SingleObjectMixin):
